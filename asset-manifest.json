@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/SwatiNMurthy/ReactiveDataSystems/static/css/main.d1b05096.chunk.css",
+    "main.js": "/SwatiNMurthy/ReactiveDataSystems/static/js/main.69327b45.chunk.js",
+    "main.js.map": "/SwatiNMurthy/ReactiveDataSystems/static/js/main.69327b45.chunk.js.map",
+    "runtime-main.js": "/SwatiNMurthy/ReactiveDataSystems/static/js/runtime-main.06d103a1.js",
+    "runtime-main.js.map": "/SwatiNMurthy/ReactiveDataSystems/static/js/runtime-main.06d103a1.js.map",
+    "static/js/2.b856e36f.chunk.js": "/SwatiNMurthy/ReactiveDataSystems/static/js/2.b856e36f.chunk.js",
+    "static/js/2.b856e36f.chunk.js.map": "/SwatiNMurthy/ReactiveDataSystems/static/js/2.b856e36f.chunk.js.map",
+    "index.html": "/SwatiNMurthy/ReactiveDataSystems/index.html",
+    "precache-manifest.cc404539e1b53be93ee7dd25d6fb4b1c.js": "/SwatiNMurthy/ReactiveDataSystems/precache-manifest.cc404539e1b53be93ee7dd25d6fb4b1c.js",
+    "service-worker.js": "/SwatiNMurthy/ReactiveDataSystems/service-worker.js",
+    "static/css/main.d1b05096.chunk.css.map": "/SwatiNMurthy/ReactiveDataSystems/static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.b856e36f.chunk.js.LICENSE.txt": "/SwatiNMurthy/ReactiveDataSystems/static/js/2.b856e36f.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/SwatiNMurthy/ReactiveDataSystems/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.06d103a1.js",
+    "static/js/2.b856e36f.chunk.js",
+    "static/css/main.d1b05096.chunk.css",
+    "static/js/main.69327b45.chunk.js"
+  ]
+}
