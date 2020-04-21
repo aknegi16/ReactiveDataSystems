@@ -35,10 +35,15 @@ export default class Train extends React.Component {
 			if (response.data != null) {
 				this.setState({"show":true});
 				setTimeout(() => this.setState({"show":false}), 3000);
+				this.resetTrain();
 			} else {
 				this.setState({"show":false});	
 			}
 		});
+	}
+	
+	deleteTrainDetails(event) {
+		event.preventDefault();
 	}
 	
 	resetTrain = () => {
@@ -55,7 +60,7 @@ export default class Train extends React.Component {
 		return(
 		<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast children={{show: this.state.show, message:"Train saved successfully"}}/>
+				<MyToast children={{show: this.state.show, message:"Train saved successfully", type:"success"}}/>
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
 			<Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add Train</Card.Header>
@@ -64,7 +69,7 @@ export default class Train extends React.Component {
 			<Card.Body>
 				<Form.Row>
 			  	   <Form.Group as={Col} controlId="formGridTrainId">
-				  		<Form.Label>Train Name</Form.Label>
+				  		<Form.Label>Train Id</Form.Label>
 					    <Form.Control required autoComplete="off"
 					    	type="text" name="trainId"
 					    	value={trainId}

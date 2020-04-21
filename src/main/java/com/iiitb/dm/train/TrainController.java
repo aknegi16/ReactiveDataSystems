@@ -36,8 +36,8 @@ public class TrainController {
 		trainService.updateTrain(train, id);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/trains/{id}")
-	public void deleteTrains(@PathVariable String id) {
-		trainService.deleteTrain(id);
+	@RequestMapping(method=RequestMethod.DELETE,value="/trains/{trainId}")
+	public void deleteTrains(@PathVariable String trainId) {
+		trainService.deleteTrain(trainId);
 	}
 }

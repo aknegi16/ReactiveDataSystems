@@ -11,9 +11,9 @@ export default class NavigationBar extends React.Component {
 			<Link to={""} className="navbar-brand">
 		 	</Link>	
 			 <Nav className="mr-auto">
-			 <Nav.Link><Link to={""}>Add User</Link></Nav.Link>
-		      <Nav.Link><Link to={"add"}>See all users</Link></Nav.Link>
-		      <Nav.Link><Link to={"list"}>Show Train List</Link></Nav.Link>
+			 <Nav.Link><Link to={""}>Hello</Link></Nav.Link>
+		      <Nav.Link><Link to={"add"}>Add a train</Link></Nav.Link>
+		      <Nav.Link><Link to={"list"}>Show all trains</Link></Nav.Link>
 		    </Nav>
 		</Navbar>
 		);
