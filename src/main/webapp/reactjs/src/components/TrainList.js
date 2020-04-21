@@ -40,16 +40,12 @@ export default class TrainList extends React.Component {
 				this.setState({"show":false});	
 			}
 		});
-	};
+	}
 	render() {
 		return(
 			<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast children={
-						{show: this.state.show,
-						message:"Train deleted successfully",
-						type:"danger"}
-						}/>
+				<MyToast children={{show: this.state.show, message:"Train deleted successfully", type:"danger"}}/>
 				}
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>

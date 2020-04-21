@@ -35,15 +35,11 @@ export default class Train extends React.Component {
 			if (response.data != null) {
 				this.setState({"show":true});
 				setTimeout(() => this.setState({"show":false}), 3000);
-				this.resetTrain();
 			} else {
 				this.setState({"show":false});	
 			}
 		});
-	}
-	
-	deleteTrainDetails(event) {
-		event.preventDefault();
+		this.setState(this.initialState);
 	}
 	
 	resetTrain = () => {
