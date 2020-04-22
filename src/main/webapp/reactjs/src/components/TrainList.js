@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import MyToast from './MyToast';
@@ -45,7 +46,7 @@ export default class TrainList extends React.Component {
 		return(
 			<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast children={{show: this.state.show, message:"Train deleted successfully", type:"danger"}}/>
+				<MyToast show={this.state.show} message={"Train deleted successfully"} type={"danger"}/>
 				}
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
@@ -77,8 +78,7 @@ export default class TrainList extends React.Component {
 						    	<td>{train.onTime}</td>
 						    	<td>
 						    		<ButtonGroup>
-						    			<Button size='sm' variant="outline-primary"><FontAwesomeIcon icon={faEdit}/></Button>
-						    			{' '}
+						    			<Link to={"edit/"+train.trainId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
 						    			<Button size='sm' variant="outline-danger" onClick={this.deleteTrain.bind(this, train.trainId)}><FontAwesomeIcon icon={faTrash}/></Button>
 						    		</ButtonGroup>
 						    	</td>
