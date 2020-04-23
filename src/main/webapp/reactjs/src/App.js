@@ -25,7 +25,8 @@ function App() {
     					<Route path="/register" exact component={Register}/>
     					<Route path="/home" exact component={home}/>
     					<Route path="/add" exact component={Train}/>
-    					<Route path="/list" exact component={TrainList}/>
+    					<Route path="/list" exact component={TrainList}/>"
+    					<Route path="/edit/:id" exact component={Train}/>
     				</Switch>
     			</Col>
     		</Row>
