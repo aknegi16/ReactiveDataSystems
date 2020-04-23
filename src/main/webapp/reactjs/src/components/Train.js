@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faPlusSquare, faUndo} from '@fortawesome/free-solid-svg-icons';
+import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
 
 import MyToast from './MyToast';
 
@@ -17,6 +17,29 @@ export default class Train extends React.Component {
 		this.trainChange = this.trainChange.bind(this);
 		this.submitTrain = this.submitTrain.bind(this);
 	}
+	componentDidMount() {
+		const trainId = +this.props.match.params.id;
+		if (trainId) {
+			this.findTrainById(trainId);
+		}
+	};
+	
+	findTrainById = (trainId) => {
+		axios.get("http://localhost:8001/rest/trains/"+trainId)
+		.then(response => {
+			if (response.data != null) {
+				this.setState({
+					trainId: response.data.trainId,
+					trainName: response.data.trainName,
+					numberOfBogies: response.data.numberOfBogies,
+					remainingSeats: response.data.remainingSeats,
+					onTime: response.data.onTime
+				});
+			}
+		}).catch((error) => {
+			console.error("Error - "+error);
+		});
+	};
 	
 	submitTrain(event) {
 		//alert('Train Name: '+this.state.trainName+'\nNumber of Bogies: '+this.state.numberOfBogies+'\nSeats remaining: '+this.state.remainingSeats+'\nTrain on time?: '+this.state.onTime);
@@ -30,41 +53,69 @@ export default class Train extends React.Component {
 			onTime: this.state.onTime	
 		}
 		
-		axios.post("http://localhost:8001/rest/trains", train).
+		axios.post("http://localhost:8001/rest/trains/", train).
 		then(response => {
 			if (response.data != null) {
-				this.setState({"show":true});
+				this.setState({"show":true, "method":"post"});
 				setTimeout(() => this.setState({"show":false}), 3000);
 			} else {
 				this.setState({"show":false});	
 			}
 		});
-	}
+		this.setState(this.initialState);
+	};
+	
+	updateTrain = event => {
+		event.preventDefault();
+		const train = {
+				trainId: this.state.trainId,
+				trainName:this.state.trainName,
+				numberOfBogies: this.state.numberOfBogies,
+				remainingSeats: this.state.remainingSeats,
+				onTime: this.state.onTime	
+			}
+		axios.put("http://localhost:8001/rest/trains/"+train.trainId, train).
+		then(response => {
+			if (response.data != null) {
+				this.setState({"show":true, "method":"put"});
+				setTimeout(() => this.setState({"show":false}), 3000);
+				setTimeout(() => this.trainList(), 3000);
+			} else {
+				this.setState({"show":false});	
+			}
+		});
+		this.setState(this.initialState);
+	};
 	
 	resetTrain = () => {
 		this.setState(() => this.initialState);
-	}	
+	};
+	
 	trainChange(event) {
 		this.setState({
 			[event.target.name]:event.target.value
 		});
-	}
+	};
+	
+	trainList = () => {
+		return this.props.history.push("/list");
+	};
 	render() {
 		const {trainId, trainName, numberOfBogies,remainingSeats, onTime} = this.state;
 		
 		return(
 		<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast children={{show: this.state.show, message:"Train saved successfully"}}/>
+				<MyToast show={this.state.show} message={this.state.method === "put" ? "Train updated successfully": "Train saved successfully"} type={"success"}/>
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add Train</Card.Header>
+			<Card.Header><FontAwesomeIcon icon={this.state.trainId ? faEdit : faPlusSquare}/> {this.state.trainId ? "Update Train" : "Add new Train"}</Card.Header>
 			
-			<Form id="trainFormId" onSubmit={this.submitTrain} onReset={this.resetTrain}>
+			<Form id="trainFormId" onReset={this.resetTrain} onSubmit={this.state.trainId ? this.updateTrain : this.submitTrain}>
 			<Card.Body>
 				<Form.Row>
 			  	   <Form.Group as={Col} controlId="formGridTrainId">
-				  		<Form.Label>Train Name</Form.Label>
+				  		<Form.Label>Train Id</Form.Label>
 					    <Form.Control required autoComplete="off"
 					    	type="text" name="trainId"
 					    	value={trainId}
@@ -116,11 +167,15 @@ export default class Train extends React.Component {
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
 			 <Button size="sm" variant="success" type="submit">
-			    <FontAwesomeIcon icon={faSave}/> Submit
+			    <FontAwesomeIcon icon={faSave}/> {this.state.trainId ? "Update" : "Save"}
 			  </Button>
 			    {' '}
 			    <Button size="sm" variant="info" type="reset">
 			    <FontAwesomeIcon icon={faUndo}/> Reset
+			  </Button>
+			    {' '}
+			    <Button size="sm" variant="info" type="button" onClick={this.trainList.bind()}>
+			    <FontAwesomeIcon icon={faList}/> Train List
 			  </Button>
 			</Card.Footer>
 			</Form>

@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import MyToast from './MyToast';
 
 
 export default class TrainList extends React.Component {
@@ -26,9 +28,27 @@ export default class TrainList extends React.Component {
 			this.setState({trains: data});
 		});
 	}
-	
+	deleteTrain = (trainId) => {
+		axios.delete("http://localhost:8001/rest/trains/"+trainId)
+		.then(response => {
+			if (response.data != null) {
+				this.setState({"show":true});
+				setTimeout(() => this.setState({"show":false}), 3000);
+				this.setState({
+					trains: this.state.trains.filter(train => train.trainId != trainId)
+				});
+			} else {
+				this.setState({"show":false});	
+			}
+		});
+	}
 	render() {
 		return(
+			<div>
+			<div style={{"display":this.state.show ? "block" : "none"}}>
+				<MyToast show={this.state.show} message={"Train deleted successfully"} type={"danger"}/>
+				}
+			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
 				<Card.Header><FontAwesomeIcon icon={faList}/> Train List</Card.Header>
 				<Card.Body>
@@ -48,7 +68,7 @@ export default class TrainList extends React.Component {
 				  {
 					  this.state.trains.length === 0 ?
 					    <tr align="center">
-					    	<td colSpan="4">No trains available</td>
+					    	<td colSpan="5">No trains available</td>
 					    </tr> :
 					    	this.state.trains.map((train) =>
 					    	<tr align="center" key={train.trainId}>
@@ -58,11 +78,8 @@ export default class TrainList extends React.Component {
 						    	<td>{train.onTime}</td>
 						    	<td>
 						    		<ButtonGroup>
-						    			<Button size='sm'><FontAwesomeIcon icon={faEdit}/> </Button>
-						    			{' '}
-						    			<Button size='sm' variant="danger">
-						    				<FontAwesomeIcon icon={faTrash}/>
-						    			</Button>
+						    			<Link to={"edit/"+train.trainId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
+						    			<Button size='sm' variant="outline-danger" onClick={this.deleteTrain.bind(this, train.trainId)}><FontAwesomeIcon icon={faTrash}/></Button>
 						    		</ButtonGroup>
 						    	</td>
 						    </tr> 
@@ -72,6 +89,7 @@ export default class TrainList extends React.Component {
 				</Table>
 				</Card.Body>
 			</Card>
+			</div>
 		);
 	}
 }
