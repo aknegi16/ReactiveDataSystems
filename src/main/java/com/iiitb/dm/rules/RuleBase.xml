@@ -1,0 +1,48 @@
+<RuleBase>
+	<Rule rule_id="R1">
+		<rule_description>Adding extra bhogi (seats) on demand</rule_description>
+		<table>Train_stats</table>
+		<Event>
+			<event_type>insert/update</event_type>
+			<conditions>
+				<Condition>
+					<attribute>Remaining_Seats</attribute>
+					<operator>&lt;=</operator>
+					<value>10</value>
+				</Condition>
+				<conjunction></conjunction>
+			</conditions>
+		</Event>
+		<Action>
+			<action_type>DataBase</action_type>
+			<query>insert into train_table a new bogi for that particular train</query>
+			<method_path>none</method_path>
+		</Action>
+		<rule_type>immediate</rule_type>
+		<rule_status>Active</rule_status>
+	</Rule>
+
+	<Rule rule_id="R2">
+		<rule_description>Sending mails to professors on receiving an application in their domain</rule_description>
+			<table>Applications</table>
+			<Event>
+				<event_type>insert/update</event_type>
+				<conditions>
+					<Condition>
+						<attribute></attribute>
+						<operator></operator>
+						<value></value>
+					</Condition>
+					<conjunction></conjunction>
+				</conditions>
+			</Event>
+			<Action>
+				<action_type>Application</action_type>
+				<query>none</query>
+				<method_path>com.rdbms.RuleEval.sendMail</method_path>
+			</Action>
+		<rule_type>deferred</rule_type>
+		<rule_status>Active</rule_status>
+	</Rule>
+</RuleBase>
+
