@@ -1,15 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import {Container, Row ,Col} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import NavigationBar from './components/NavigationBar';
-import Welcome from './components/Welcome';
+import home from './home';
 import Footer from './components/Footer';
 import Train from './components/Train';
 import TrainList from './components/TrainList';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
 	const marginTop = {
@@ -17,14 +17,14 @@ function App() {
 	};
   return (
     <Router>
-    	<NavigationBar/>
     	<Container>
     		<Row>
     			<Col lg={12} style={marginTop}>
     				<Switch>
-    					<Route path="/" exact component={Welcome}/>
+    					<Route path="/" exact component={Login}/>
+    					<Route path="/register" exact component={Register}/>
+    					<Route path="/home" exact component={home}/>
     					<Route path="/add" exact component={Train}/>
-    					<Route path="/edit/:id" exact component={Train}/>
     					<Route path="/list" exact component={TrainList}/>
     				</Switch>
     			</Col>

@@ -8,17 +8,35 @@ public class User {
 	@Id
 	private String id;
 	private String name;
-	private String mobileNumber;
+	private String mail;
+	private String password;
 	
 	public User() {}
 	
-	public User(String id, String name, String mobileNumber) {
+	public User(String id, String name, String mobileNumber,String password) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.mobileNumber = mobileNumber;
+		this.mail = mobileNumber;
+		this.password=password;
 	}
 	
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -31,12 +49,5 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-	
-	
+		
 }
