@@ -15,9 +15,13 @@ public class RulesController {
 	@Autowired
 	private RuleService ruleService;
 	
+	@RequestMapping(method=RequestMethod.POST, value="/rules")
+	public boolean ruleBaseMarshall(@RequestBody Rule rule) {
+		return ruleService.ruleBaseMarshall(rule);
+	}
 	@RequestMapping(value="/rules")
-	public void ruleMarshalling() {
+	public List<Rule> ruleBaseUnmarshall() {
 		System.out.println("Got here");
-		ruleService.ruleUnmarshall();
+		return ruleService.ruleBaseUnmarshall();
 	}
 }

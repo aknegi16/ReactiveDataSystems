@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="RuleBase")
 public class RuleBase {
 	
 	private List<Rule> rules = new ArrayList<Rule>();
