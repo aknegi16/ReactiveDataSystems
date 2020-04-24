@@ -4,6 +4,7 @@ import './App.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+localStorage.setItem('loggedin',false);
 ReactDOM.render(
   <React.StrictMode>
     <App />

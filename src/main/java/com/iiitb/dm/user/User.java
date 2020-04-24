@@ -13,11 +13,11 @@ public class User {
 	
 	public User() {}
 	
-	public User(String id, String name, String mobileNumber,String password) {
+	public User(String id, String name, String mail,String password) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.mail = mobileNumber;
+		this.mail = mail;
 		this.password=password;
 	}
 	

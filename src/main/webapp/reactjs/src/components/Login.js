@@ -28,16 +28,18 @@ export default class Login extends React.Component {
 		
 		axios.get("http://localhost:8001/rest/users/"+user.id).
 		then(response => {
-			if (response.data.password === user.password) {
-				//alert("right");
+			if(response.data.id===user.id && response.data.password===user.password)
+			{
+				localStorage.setItem('loggedin',true);
 				this.props.history.push('/home');
-			} else {
+			} 
+			else{
 				alert("please fill valid details");
+				this.reset();
 				this.props.history.push('/');
-			}
-		});
-		
-		
+		}
+		}).catch(error => {alert("please fill valid details");
+				this.reset();});
 	}
 	
 	register =() =>{

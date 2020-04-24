@@ -10,24 +10,26 @@ import Train from './components/Train';
 import TrainList from './components/TrainList';
 import Login from './components/Login';
 import Register from './components/Register';
+import Welcome from './components/Welcome';
 
 function App() {
 	const marginTop = {
-			marginTop: "20px"
+			marginTop: "40px"
 	};
+
   return (
     <Router>
     	<Container>
     		<Row>
     			<Col lg={12} style={marginTop}>
-    				<Switch>
+    				
     					<Route path="/" exact component={Login}/>
     					<Route path="/register" exact component={Register}/>
-    					<Route path="/home" exact component={home}/>
+    					<Route exact path="/home" component={home}/>
     					<Route path="/add" exact component={Train}/>
-    					<Route path="/list" exact component={TrainList}/>"
+    					<Route path="/welcome" exact component={Welcome}/>
+    					<Route path="/list" exact component={TrainList}/>
     					<Route path="/edit/:id" exact component={Train}/>
-    				</Switch>
     			</Col>
     		</Row>
     	</Container>

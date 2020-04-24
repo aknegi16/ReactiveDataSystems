@@ -7,17 +7,21 @@ import {faSave, faUndo} from '@fortawesome/free-solid-svg-icons';
 
 export default class Register extends React.Component {
 	
-	initialState = {userId:'',userName:'',mail:'', password:''};
+	initialState = {id:'',name:'',mail:'', password:''};
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
-		this.state.show = false;
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 	
+	onChange(event) {
+		this.setState({
+			[event.target.name]:event.target.value
+		});
+	}
+	
 	onSubmit(event) {
-		//alert('Train Name: '+this.state.trainName+'\nNumber of Bogies: '+this.state.numberOfBogies+'\nSeats remaining: '+this.state.remainingSeats+'\nTrain on time?: '+this.state.onTime);
 		event.preventDefault();
 		
 		const user = {
@@ -27,19 +31,23 @@ export default class Register extends React.Component {
 			password: this.state.password
 		}
 		
+		axios.get("http://localhost:8001/rest/users/"+user.id).
+		then(response => {
+			if(response.data.id===user.id)
+			{
+				alert("Sorry, User Id already exists");
+				this.reset();
+				return this.props.history.push('/register');
+			}
+		}).
+		catch(error=>{
+		
 		axios.post("http://localhost:8001/rest/users", user).
 		then(response => {
-			if (response.data != null) {
-				this.setState({"show":true});
-				setTimeout(() => this.setState({"show":false}), 3000);
-			} else {
-				this.setState({"show":false});	
-			}
-		})
-		if(this.state.value!= '')
-        {
-			this.props.history.push('/');
-        }
+				this.props.history.push('/');
+		}).
+		catch(error => alert("please enter valid inputs"));
+		});
 	}
 	
 	reset = () => {
@@ -48,11 +56,7 @@ export default class Register extends React.Component {
 	login = () => {
 		this.props.history.push('/');
 	}
-	onChange(event) {
-		this.setState({
-			[event.target.name]:event.target.value
-		});
-	}
+	
 	render() {
 		
 		return(
@@ -119,7 +123,7 @@ export default class Register extends React.Component {
 			</Form>
 			</Card>
 			
-		</div>		
+		</div>
 		
 		);
 	}
