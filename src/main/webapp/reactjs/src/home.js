@@ -40,6 +40,7 @@ class home extends React.Component {
 		    					<Route path="/home" exact component={Welcome}/>
 		    					<Route path="/add" exact component={Train}/>
 		    					<Route path="/list" exact component={TrainList}/>
+		    					<Route path="/edit/:id" exact component={Train}/>
 		    				</Switch>
 		    			</Col>
 		    		</Row>

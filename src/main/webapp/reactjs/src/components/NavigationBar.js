@@ -18,12 +18,12 @@ export default class NavigationBar extends React.Component {
 	render() {
 		return (
 		<Navbar bg="dark" variant="dark" fixed="top">
-			 <Nav className="mr-auto">
-			 <Link to={"home"} className="nav-link">Hello</Link>
+			 <Nav className="container-fluid">
+			 <Link to={"home"} className="nav-link">Home</Link>
 		      <Link to={"add"} className="nav-link">Add a train</Link>
 		      <Link to={"list"} className="nav-link">Show all trains</Link>
 		      
-		      <Button size="sm" variant="secondary" onClick={this.logout}>Logout</Button>
+		      <Button className="ml-auto" size="sm" variant="secondary" onClick={this.logout}>Logout</Button>
 		    </Nav>
 		</Navbar>
 		);
