@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 		}
 		
 		public void run(String...strings) throws Exception {
-			this.repository.save(new User("1","sravya", "sravya.m@iiitb.org","srav"));
-			this.repository.save(new User("2","swati", "swati.n.murthy@iiitb.org","srav"));
+			this.repository.save(new User("1","sravya", "sravya.m@iiitb.org","srav","20","F","123456"));
+			this.repository.save(new User("2","swati", "swati.n.murthy@iiitb.org","srav","20","F","654321"));
 		}
 	}

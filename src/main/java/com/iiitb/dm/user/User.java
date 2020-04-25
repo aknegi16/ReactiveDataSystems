@@ -10,17 +10,28 @@ public class User {
 	private String name;
 	private String mail;
 	private String password;
+	private String age;
+	private String sex;
+	private String pnr;
+	
 	
 	public User() {}
 	
-	public User(String id, String name, String mail,String password) {
+	
+	
+	public User(String id, String name, String mail, String password, String age, String sex, String pnr) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.mail = mail;
-		this.password=password;
+		this.password = password;
+		this.age = age;
+		this.sex = sex;
+		this.pnr = pnr;
 	}
-	
+
+
+
 	public String getMail() {
 		return mail;
 	}
@@ -48,6 +59,30 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getPnr() {
+		return pnr;
+	}
+
+	public void setPnr(String pnr) {
+		this.pnr = pnr;
 	}
 		
 }
