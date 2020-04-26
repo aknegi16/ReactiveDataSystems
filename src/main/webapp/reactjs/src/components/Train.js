@@ -9,7 +9,7 @@ import MyToast from './MyToast';
 
 export default class Train extends React.Component {
 	
-	initialState = {trainId:'',trainName:'',numberOfBogies:'',remainingSeats:'', onTime:''};;
+	initialState = {trainId:'',trainName:'',numberOfCompartments:'',bookedSeats:'',remainingSeats:'', date:'',src:'',dest:''};;
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
@@ -31,9 +31,14 @@ export default class Train extends React.Component {
 				this.setState({
 					trainId: response.data.trainId,
 					trainName: response.data.trainName,
-					numberOfBogies: response.data.numberOfBogies,
-					remainingSeats: response.data.remainingSeats,
-					onTime: response.data.onTime
+					numberOfCompartment: response.data.numberOfCompartment,
+					bookedSeats :response.data.bookedSeats,
+					remainingSeats:response.data.remainingSeats,
+					src :response.data.src,
+					date :response.data.date,
+					dest :response.data.dest,
+			
+					
 				});
 			}
 		}).catch((error) => {
@@ -48,9 +53,12 @@ export default class Train extends React.Component {
 		const train = {
 			trainId: this.state.trainId,
 			trainName:this.state.trainName,
-			numberOfBogies: this.state.numberOfBogies,
-			remainingSeats: this.state.remainingSeats,
-			onTime: this.state.onTime	
+			numberOfCompartment: this.state.numberOfCompartment,
+			bookedSeats:this.state.bookedSeats,
+			remainingSeats:this.state.remainingSeats,
+			src :this.state.src,
+			date :this.state.date,
+			dest :this.state.dest
 		}
 		
 		axios.post("http://localhost:8001/rest/trains/", train).
@@ -70,9 +78,12 @@ export default class Train extends React.Component {
 		const train = {
 				trainId: this.state.trainId,
 				trainName:this.state.trainName,
-				numberOfBogies: this.state.numberOfBogies,
-				remainingSeats: this.state.remainingSeats,
-				onTime: this.state.onTime	
+				numberOfCompartment: this.state.numberOfCompartment,
+				bookedSeats:this.state.bookedSeats,
+				remainingSeats:this.state.remainingSeats,
+				src :this.state.src,
+				date :this.state.date,
+				dest :this.state.dest
 			}
 		axios.put("http://localhost:8001/rest/trains/"+train.trainId, train).
 		then(response => {
@@ -101,7 +112,7 @@ export default class Train extends React.Component {
 		return this.props.history.push("/list");
 	};
 	render() {
-		const {trainId, trainName, numberOfBogies,remainingSeats, onTime} = this.state;
+		const {trainId,trainName,numberOfCompartment,bookedSeats,remainingSeats,src,date,dest} = this.state;
 		
 		return(
 		<div>
@@ -134,33 +145,67 @@ export default class Train extends React.Component {
 					    	placeholder="Enter train name" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
-				  <Form.Group as={Col} controlId="formGridNumberOfBogies">
-				      	<Form.Label>Number of bogies</Form.Label>
+				  <Form.Group as={Col} controlId="formGridNumberOfCompartment">
+				      	<Form.Label>Number of Compartment</Form.Label>
 				      <Form.Control required autoComplete="off"
-				      	type="text" name="numberOfBogies"
-				      	value={numberOfBogies}
+				      	type="text" name="numberOfCompartment"
+				      	value={numberOfCompartment}
 				    	onChange={this.trainChange}
-				      	placeholder="Enter number of bogies"
+				      	placeholder="Enter number of Compartments"
+				      	className={"bg-dark text-white"}/>
+				   </Form.Group>
+			  	</Form.Row>
+				<Form.Row>
+			  	   <Form.Group as={Col} controlId="formGridsrc">
+				  		<Form.Label>Src</Form.Label>
+					    <Form.Control required autoComplete="off"
+					    	type="text" name="src"
+					    	value={src}
+					    	onChange={this.trainChange}
+					    	placeholder="Enter src" 
+					    	className={"bg-dark text-white"}/>
+				  </Form.Group>
+				  <Form.Group as={Col} controlId="formGriddest">
+				      	<Form.Label>Dest</Form.Label>
+				      <Form.Control required autoComplete="off"
+				      	type="text" name="dest"
+				      	value={dest}
+				    	onChange={this.trainChange}
+				      	placeholder="Enter dest"
+				      	className={"bg-dark text-white"}/>
+				   </Form.Group>
+			  	</Form.Row>
+			  	
+			  	
+			  	<Form.Row>
+			  	   <Form.Group as={Col} controlId="formGridbookedSeats">
+				  		<Form.Label>Booked Seats</Form.Label>
+					    <Form.Control required autoComplete="off"
+					    	type="text" name="bookedSeats"
+					    	value={bookedSeats}
+					    	onChange={this.trainChange}
+					    	placeholder="Enter Booked Seats" 
+					    	className={"bg-dark text-white"}/>
+				  </Form.Group>
+				  <Form.Group as={Col} controlId="formGridremainingSeats">
+				      	<Form.Label>Remaining Seats</Form.Label>
+				      <Form.Control required autoComplete="off"
+				      	type="text" name="remainingSeats"
+				      	value={remainingSeats}
+				    	onChange={this.trainChange}
+				      	placeholder="Enter Remaining Seats"
 				      	className={"bg-dark text-white"}/>
 				   </Form.Group>
 			  	</Form.Row>
 			  	<Form.Row>
-			  	   <Form.Group as={Col} controlId="formGridRemainingSeats">
-				  		<Form.Label>Seats remaining</Form.Label>
-					    <Form.Control required autoComplete="off"
-					    	type="text" name="remainingSeats"
-					    	value={remainingSeats}
-					    	onChange={this.trainChange}
-					    	placeholder="Enter seats remaining" 
-					    	className={"bg-dark text-white"}/>
-				  </Form.Group>
-				  <Form.Group as={Col} controlId="formGridOnTime">
-				      	<Form.Label>On Time</Form.Label>
+			  	   
+				  <Form.Group as={Col} controlId="formGriddate">
+				      	<Form.Label>Date & Time (dd:mm::yyyy hh:mm:ss)</Form.Label>
 				      <Form.Control required autoComplete="off"
-				      	type="text" name="onTime"
-				      	value={onTime}
+				      	type="text" name="date"
+				      	value={date}
 				    	onChange={this.trainChange}
-				      	placeholder="Enter Yes or No"
+				      	placeholder="Enter date and time"
 				      	className={"bg-dark text-white"}/>
 				   </Form.Group>
 			  	</Form.Row>

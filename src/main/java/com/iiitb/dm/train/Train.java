@@ -14,6 +14,7 @@ public class Train {
 	private String trainName;
 	private String numberOfCompartment;
 	private String BookedSeats;
+	private String RemainingSeats;
 	private String src;
 	private String date;
 	private String dest;
@@ -24,13 +25,14 @@ public class Train {
 	public Train() {}
 	
 	
-	public Train(String trainId, String trainName, String numberOfCompartment, String bookedSeats, String src,
+	public Train(String trainId, String trainName, String numberOfCompartment, String bookedSeats, String RemainingSeats,String src,
 			String dest, String date) {
 		super();
 		this.trainId = trainId;
 		this.trainName = trainName;
 		this.numberOfCompartment = numberOfCompartment;
 		this.BookedSeats = bookedSeats;
+		this.RemainingSeats=RemainingSeats;
 		this.src = src;
 		this.dest = dest;
 		this.date=date;
@@ -98,6 +100,16 @@ public class Train {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+
+	public String getRemainingSeats() {
+		return RemainingSeats;
+	}
+
+
+	public void setRemainingSeats(String remainingSeats) {
+		RemainingSeats = remainingSeats;
 	}
 	
 	

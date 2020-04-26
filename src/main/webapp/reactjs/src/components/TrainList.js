@@ -52,15 +52,17 @@ export default class TrainList extends React.Component {
 			<Card className={"border border-dark bg-dark text-white"}>
 				<Card.Header><FontAwesomeIcon icon={faList}/> Train List</Card.Header>
 				<Card.Body>
-				<p>Lets assume 1 bogie has 10 seats. If on query any train has less than 3 seats, one more bogie is added</p>
-				<p>Goal: To implement above feature</p>
+				
 				<Table striped bordered hover variant="dark">
 				  <thead>
 				    <tr align="center">
 				      <th>Train Name</th>
-				      <th>Number Bogies</th>
+				      <th>Number of Compartments</th>
+				      <th>src</th>
+				      <th>dest</th>
+				      <th>Booked Seats</th>
 				      <th>Remaining Seats</th>
-				      <th>On Time(Yes/No)</th>
+				      <th>Date & Time</th>
 				      <th>Actions</th>
 				    </tr>
 				  </thead>
@@ -68,14 +70,17 @@ export default class TrainList extends React.Component {
 				  {
 					  this.state.trains.length === 0 ?
 					    <tr align="center">
-					    	<td colSpan="5">No trains available</td>
+					    	<td colSpan="7">No trains available</td>
 					    </tr> :
 					    	this.state.trains.map((train) =>
 					    	<tr align="center" key={train.trainId}>
 						    	<td>{train.trainName}</td>
-						    	<td>{train.numberOfBogies}</td>
+						    	<td>{train.numberOfCompartment}</td>
+						    	<td>{train.src}</td>
+						    	<td>{train.dest}</td>
+						    	<td>{train.bookedSeats}</td>
 						    	<td>{train.remainingSeats}</td>
-						    	<td>{train.onTime}</td>
+						    	<td>{train.date}</td>
 						    	<td>
 						    		<ButtonGroup>
 						    			<Link to={"edit/"+train.trainId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
