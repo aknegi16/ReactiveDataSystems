@@ -1,3 +1,6 @@
 target/
 node_modules/
 .DS_Store
+.classpath
+.project
+.settings/org.eclipse.jdt.core.prefs
