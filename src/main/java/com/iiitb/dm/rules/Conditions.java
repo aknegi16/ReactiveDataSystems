@@ -5,16 +5,16 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 public class Conditions {
-	private List<Condititon> conditions = new ArrayList<Condititon>();
+	private List<Condititon> condition = new ArrayList<Condititon>();
 	private String conjunction;
 	
 	
-	public List<Condititon> getConditions() {
-		return conditions;
+	public List<Condititon> getCondition() {
+		return condition;
 	}
 	@XmlElement(name="condition")
-	public void setConditions(List<Condititon> conditions) {
-		this.conditions = conditions;
+	public void setCondition(List<Condititon> condition) {
+		this.condition = condition;
 	}
 	
 	public String getConjunction() {
@@ -27,9 +27,9 @@ public class Conditions {
 	
 	public Conditions() {}
 	
-	public Conditions(List<Condititon> conditions, String conjunction) {
+	public Conditions(List<Condititon> condition, String conjunction) {
 		super();
-		this.conditions = conditions;
+		this.condition = condition;
 		this.conjunction = conjunction;
 	}
 }

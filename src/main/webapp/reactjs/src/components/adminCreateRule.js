@@ -11,7 +11,7 @@ export default class adminCreateRule extends React.Component {
 		table:'',
 		event:{
 			event_type:'',
-			conditions:{
+			conditions: {
 				condition:[
 					{
 						attribute:'',
@@ -43,18 +43,16 @@ export default class adminCreateRule extends React.Component {
 		event.preventDefault();
 		const rule_description = this.state.rule_description;
 		const table = this.state.table;
-		const condition = {
+		const condition = [{
 			attribute: this.state.attribute,
 			operator: this.state.operator,
 			value: this.state.value
-		};
+		}];
 		const conjunction = this.state.conjunction;
-		const conditions = [
-			{
+		const conditions = {
 				condition: condition,
 				conjunction: conjunction
 			}
-		];
 		const event_type = this.state.event_type;
 		const event1 = {
 			event_type: event_type,
@@ -84,12 +82,12 @@ export default class adminCreateRule extends React.Component {
 			rule_status: rule_status
 		};
 		
-		axios.post("http://localhost:8001/rest/createRule/", rule).
-		then(response => {
-			if (response.data !== null) {
-				alert("Response wasnt null");
+		axios.post("http://localhost:8001/rest/rules", rule)
+		.then(response => {
+			if (response.data) {
+				alert("Rule added into list");
 			} else {
-				alert("Response was null");
+				alert("Response was false, so kuch gadbad hai, dekhle backend me");
 			}
 		});
 		this.setState(this.initialState);
@@ -127,11 +125,13 @@ export default class adminCreateRule extends React.Component {
 					    <Form.Control autoComplete="off"
 					    	type="text" name="rule_description"
 					    	value={rule_description}
+					    	defaultValue=""
 					    	onChange={this.ruleChange}
 					    	placeholder="Enter Rule Description" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
 				</Form.Row>
+				
 				<Form.Row>
 					<Form.Group as={Col} controlId="table">
 				  		<Form.Label>Table</Form.Label>
@@ -147,6 +147,7 @@ export default class adminCreateRule extends React.Component {
 				    <Form.Control autoComplete="off" as="select"
 				    	type="text" name="event_type"
 				    	value={event_type}
+				    	defaultValue=""
 				    	onChange={this.ruleChange}
 				    	placeholder="Enter Event Type" 
 				    	className={"bg-dark text-white"}>
@@ -157,12 +158,14 @@ export default class adminCreateRule extends React.Component {
 				    </Form.Control>
 					</Form.Group>
 			  	</Form.Row>
-				<Form.Row>
+				
+			  	<Form.Row>
 				<Form.Group as={Col} controlId="attribute">
 			  		<Form.Label>Attribute</Form.Label>
 				    <Form.Control autoComplete="off"
 				    	type="text" name="attribute"
 				    	value={attribute}
+				    	defaultValue=""
 				    	onChange={this.ruleChange}
 				    	placeholder="Enter Attribute" 
 				    	className={"bg-dark text-white"}/>
@@ -172,6 +175,7 @@ export default class adminCreateRule extends React.Component {
 			    <Form.Control autoComplete="off" as="select"
 			    	type="text" name="operator"
 			    	value={operator}
+			    	defaultValue=""
 			    	onChange={this.ruleChange}
 			    	className={"bg-dark text-white"}>
 				    <option>Choose</option>
@@ -188,6 +192,7 @@ export default class adminCreateRule extends React.Component {
 			    <Form.Control autoComplete="off"
 			    	type="text" name="value"
 			    	value={value}
+			    	defaultValue=""
 			    	onChange={this.ruleChange}
 			    	placeholder="Enter value" 
 			    	className={"bg-dark text-white"}/>
@@ -197,6 +202,7 @@ export default class adminCreateRule extends React.Component {
 			    <Form.Control autoComplete="off" as="select"
 			    	type="text" name="conjunction"
 			    	value={conjunction}
+			    	defaultValue="none"
 			    	onChange={this.ruleChange}
 			    	className={"bg-dark text-white"}>
 				    <option>Choose</option>
@@ -205,12 +211,14 @@ export default class adminCreateRule extends React.Component {
 				</Form.Control>
 				</Form.Group>
 				</Form.Row>
+				
 				<Form.Row>
 				<Form.Group as={Col} controlId="action_type">
 			  		<Form.Label>Action Type</Form.Label>
 				    <Form.Control autoComplete="off" as="select"
 				    	type="text" name="action_type"
 				    	value={action_type}
+				    	defaultValue="query"
 				    	onChange={this.ruleChange}
 				    	className={"bg-dark text-white"}>
 				    <option>Choose</option>
@@ -223,22 +231,25 @@ export default class adminCreateRule extends React.Component {
 			    <Form.Control autoComplete="off" as="select"
 			    	type="text" name="rule_type"
 			    	value={rule_type}
+			    	defaultValue="defered"
 			    	onChange={this.ruleChange}
 			    	className={"bg-dark text-white"}>
 			    	<option>Choose</option>
 				    <option>immediate</option>
-				    <option>deffered</option>
+				    <option>defered</option>
 			    </Form.Control>
 			    </Form.Group>
 				</Form.Row>
+				
 				<Form.Row>
 				<Form.Group as={Col} controlId="query">
 			  		<Form.Label>Query</Form.Label>
 				    <Form.Control autoComplete="off"
 				    	type="text" name="query"
 				    	value={query}
+				    	defaultValue=""
 				    	onChange={this.ruleChange}
-				    	placeholder="Enter query in SQL, if you selected rule type as so"
+				    	placeholder="Enter query in SQL, if you selected action type as so"
 				    	className={"bg-dark text-white"}/>
 				</Form.Group>
 				</Form.Row>
@@ -248,17 +259,20 @@ export default class adminCreateRule extends React.Component {
 				    <Form.Control autoComplete="off"
 				    	type="text" name="method_path"
 				    	value={method_path}
+				    	defaultValue="none"
 				    	onChange={this.ruleChange}
-				    	placeholder="Enter method path, if you selected rule type as so" 
+				    	placeholder="Enter method path, if you selected action type as so" 
 				    	className={"bg-dark text-white"}/>
 				</Form.Group>
 				</Form.Row>
+				
 				<Form.Row>
 				<Form.Group as={Col} controlId="rule_status">
 			  		<Form.Label>Rule Status</Form.Label>
 				    <Form.Control autoComplete="off"
 				    	type="text" name="rule_status"
 				    	value={rule_status}
+				    	defaultValue="active"
 				    	onChange={this.ruleChange}
 				    	placeholder="Enter rule_status" 
 				    	className={"bg-dark text-white"}/>
@@ -267,7 +281,7 @@ export default class adminCreateRule extends React.Component {
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
 				<Button size="sm" variant="success" type="submit">
-			    <FontAwesomeIcon icon={faSave}/>Create Rule
+			    <FontAwesomeIcon icon={faSave}/> Create Rule
 			  </Button>
 			</Card.Footer> 
 			</Form>
