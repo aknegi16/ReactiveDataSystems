@@ -2,7 +2,7 @@
 <RuleBase>
     <Rule>
         <Action>
-            <action_type>DB</action_type>
+            <action_type>update</action_type>
             <method_path>none</method_path>
             <query>update train set remaining_seats=remaining_seats+10 where train_id=?</query>
         </Action>

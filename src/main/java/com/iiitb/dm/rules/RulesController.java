@@ -22,6 +22,10 @@ public class RulesController {
 	@RequestMapping(value="/rules")
 	public List<Rule> ruleBaseUnmarshall() {
 		System.out.println("Got here");
+		
+		// for now, calling runPreprocessing from here
+		ruleService.rulePreprocessing();
 		return ruleService.ruleBaseUnmarshall();
 	}
+	
 }
