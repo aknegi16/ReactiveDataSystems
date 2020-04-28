@@ -2,53 +2,24 @@
 <RuleBase>
     <Rule>
         <Action>
-            <action_type>DataBase</action_type>
+            <action_type>DB</action_type>
             <method_path>none</method_path>
-            <query>insert into train_table a new bogi for that particular train</query>
+            <query>update train set remaining_seats=remaining_seats+10 where train_id=?</query>
         </Action>
         <Event>
             <conditions>
-                <conjunction></conjunction>
+                <condition>
+                    <attribute>remaining_seats</attribute>
+                    <operator>&lt;=</operator>
+                    <value>5</value>
+                </condition>
+                <conjunction>none</conjunction>
             </conditions>
-            <event_type>insert/update</event_type>
+            <event_type>select</event_type>
         </Event>
-        <rule_description>Adding extra bhogi (seats) on demand</rule_description>
+        <rule_description>Adding extra compartments (seats) on demand</rule_description>
         <rule_status>Active</rule_status>
-        <rule_type>immediate</rule_type>
-        <table>Train_stats</table>
-    </Rule>
-    <Rule>
-        <Action>
-            <action_type>DataBase</action_type>
-            <method_path>none</method_path>
-            <query>insert into train_table a new bogi for that particular train</query>
-        </Action>
-        <Event>
-            <conditions>
-                <conjunction></conjunction>
-            </conditions>
-            <event_type>insert/update</event_type>
-        </Event>
-        <rule_description>Adding nothing on demand</rule_description>
-        <rule_status>Active</rule_status>
-        <rule_type>immediate</rule_type>
-        <table>Train_stats</table>
-    </Rule>
-    <Rule>
-        <Action>
-            <action_type>DataBase</action_type>
-            <method_path>none</method_path>
-            <query>insert into train_table a new bogi for that particular train</query>
-        </Action>
-        <Event>
-            <conditions>
-                <conjunction></conjunction>
-            </conditions>
-            <event_type>insert/update</event_type>
-        </Event>
-        <rule_description>Adding more and more on demand</rule_description>
-        <rule_status>Active</rule_status>
-        <rule_type>immediate</rule_type>
-        <table>Train_stats</table>
+        <rule_type>deferred</rule_type>
+        <table>train</table>
     </Rule>
 </RuleBase>

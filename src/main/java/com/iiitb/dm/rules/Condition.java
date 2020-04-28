@@ -2,7 +2,7 @@ package com.iiitb.dm.rules;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public class Condititon {
+public class Condition {
 	private String attribute;
 	private String operator;
 	private String value;
@@ -29,9 +29,9 @@ public class Condititon {
 		this.value = value;
 	}
 	
-	public Condititon() {}
+	public Condition() {}
 	
-	public Condititon(String attribute, String operator, String value) {
+	public Condition(String attribute, String operator, String value) {
 		super();
 		this.attribute = attribute;
 		this.operator = operator;
