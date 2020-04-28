@@ -8,6 +8,7 @@ import home from './home';
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Register from './components/Register';
+import adminCreateRule from './components/adminCreateRule';
 
 function App() {
 	const marginTop = {
@@ -22,10 +23,10 @@ function App() {
 					<Route path="/" exact component={Login}/>
 					<Route path="/register" exact component={Register}/>
 					<Route exact path="/home" component={home}/>
+					<Route exact path="/adminCreateRule" component={adminCreateRule}/>
     			</Col>
     		</Row>
     	</Container>
-    	<Footer/>
     </Router>
   );
 }
