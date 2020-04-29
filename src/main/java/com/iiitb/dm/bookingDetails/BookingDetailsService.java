@@ -1,6 +1,7 @@
 package com.iiitb.dm.bookingDetails;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,11 @@ public class BookingDetailsService {
 	
 	public void deleteBookingDetails(String id) {
 		bookingDetailsRepository.deleteById(id);
+	}
+
+	public List<BookingDetails> getBookingByUserId(String usr) {
+		// TODO Auto-generated method stub
+		return bookingDetailsRepository.findByUserId(usr);
+		
 	}
 }

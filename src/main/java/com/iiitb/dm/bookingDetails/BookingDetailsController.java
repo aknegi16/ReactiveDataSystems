@@ -26,6 +26,12 @@ public class BookingDetailsController {
 		return bookingDetailsService.getBookingDetails(id);
 	}
 	
+
+	@RequestMapping("/bookingDetails/user/{usr}")
+	public List<BookingDetails> getBookingByUserId(@PathVariable String usr) {
+		return bookingDetailsService.getBookingByUserId(usr);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value = "/bookingDetails")
 	public void addBookingDetails(@RequestBody BookingDetails bookingDetails) {
 		bookingDetailsService.addBookingDetails(bookingDetails);

@@ -32,4 +32,16 @@ public class TrainService {
 	public void deleteTrain(String id) {
 		trainRepository.deleteById(id);
 	}
+
+	public List<Train> getTrainBySrc(String src) {
+		// TODO Auto-generated method stub
+		return trainRepository.getTrainBySrc(src);
+	}
+
+	public List<String> getAllsrc() {
+		// TODO Auto-generated method stub
+		return trainRepository.findDistinctsrc();
+	}
+
+	
 }

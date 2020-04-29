@@ -26,10 +26,24 @@ public class TrainController {
 		return trainService.getTrain(id);
 	}
 	
+	@RequestMapping("/trains/src/{src}")
+	public List<Train> getTrainBySrc(@PathVariable String src) {
+		return trainService.getTrainBySrc(src);
+	}
+	
+	@RequestMapping("/trains/allsrc")
+	public List<String> getAllsrc() {
+		List<String> lists= trainService.getAllsrc();
+		return lists;
+	}
+	
+	
 	@RequestMapping(method=RequestMethod.POST, value = "/trains")
 	public void addTrain(@RequestBody Train train) {
 		trainService.addTrain(train);
 	}
+	
+	
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/trains/{id}")
 	public void updateTrain(@RequestBody Train train, @PathVariable String id) {
