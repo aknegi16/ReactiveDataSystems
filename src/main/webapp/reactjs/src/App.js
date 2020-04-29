@@ -4,11 +4,12 @@ import './App.css';
 import {Container, Row ,Col} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import home from './home';
+import userHome from './userHome';
+import adminHome from './adminHome';
 import Footer from './components/Footer';
-import Login from './components/Login';
+import userLogin from './components/userLogin';
 import Register from './components/Register';
-import adminCreateRule from './components/adminCreateRule';
+import adminLogin from './components/adminLogin';
 
 function App() {
 	const marginTop = {
@@ -20,10 +21,11 @@ function App() {
     	<Container>
     		<Row>
     			<Col lg={12} style={marginTop}>
-					<Route path="/" exact component={Login}/>
+					<Route path="/" exact component={userLogin}/>
 					<Route path="/register" exact component={Register}/>
-					<Route exact path="/home" component={home}/>
-					<Route exact path="/adminCreateRule" component={adminCreateRule}/>
+					<Route path="/adminLogin" exact component={adminLogin}/>
+					<Route exact path="/adminHome" exact component={adminHome}/>
+					<Route path="/userHome" exact component={userHome}/>
     			</Col>
     		</Row>
     	</Container>

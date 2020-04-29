@@ -3,11 +3,13 @@ import axios from 'axios';
 
 import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faUndo} from '@fortawesome/free-solid-svg-icons';
+import {faSave, faUndo, faPlusSquare} from '@fortawesome/free-solid-svg-icons';
+
+import MyToast from './MyToast';
 
 export default class Register extends React.Component {
 	
-	initialState = {id:'',name:'',mail:'', password:''};
+	initialState = {id:'', age:'', mail:'', mobile_no:'', name:'', password:'', sex:''};
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
@@ -26,9 +28,12 @@ export default class Register extends React.Component {
 		
 		const user = {
 			id: this.state.id,
-			name:this.state.name,
+			age: this.state.age,
 			mail: this.state.mail,
-			password: this.state.password
+			mobile_no: this.state.mobile_no,
+			name:this.state.name,
+			password: this.state.password,
+			sex: this.state.sex
 		}
 		
 		axios.get("http://localhost:8001/rest/users/"+user.id).
@@ -44,10 +49,13 @@ export default class Register extends React.Component {
 		
 		axios.post("http://localhost:8001/rest/users", user).
 		then(response => {
-				this.props.history.push('/');
+				this.setState({"show":true, "method":"post"});
+				setTimeout(() => this.setState({"show":false}), 3000);
+				this.props.history.push('/register');
 		}).
 		catch(error => alert("please enter valid inputs"));
 		});
+		
 	}
 	
 	reset = () => {
@@ -61,8 +69,11 @@ export default class Register extends React.Component {
 		
 		return(
 		<div>
+			<div style={{"display":this.state.show ? "block" : "none"}}>
+				<MyToast show={this.state.show} message={"User registered successfully"} type={"success"}/>
+			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header> Register </Card.Header>
+			<Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Register</Card.Header>
 			
 			<Form id="FormId" onSubmit={this.onSubmit} onReset={this.reset}>
 			<Card.Body>
@@ -76,17 +87,8 @@ export default class Register extends React.Component {
 					    	placeholder="Enter user ID" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
-					<Form.Group as={Col} controlId="formGrid">
-					  		<Form.Label>Password</Form.Label>
-						    <Form.Control required autoComplete="off"
-						    	type="password" name="password"
-						    	value={this.state.password}
-						    	onChange={this.onChange}
-						    	placeholder="Enter password" 
-						    	className={"bg-dark text-white"}/>
-					  </Form.Group>					    
 				</Form.Row>
-			  	<Form.Row>
+				<Form.Row>
 				  	<Form.Group as={Col} controlId="formGrid">
 				  		<Form.Label>User Name</Form.Label>
 					    <Form.Control required autoComplete="off"
@@ -95,17 +97,57 @@ export default class Register extends React.Component {
 					    	onChange={this.onChange}
 					    	placeholder="Enter user name" 
 					    	className={"bg-dark text-white"}/>
-				  </Form.Group>
-				  <Form.Group as={Col} controlId="formGrid">
+					</Form.Group>
+					<Form.Group as={Col} controlId="formGrid">
+					  		<Form.Label>Password</Form.Label>
+						    <Form.Control required autoComplete="off"
+						    	type="password" name="password"
+						    	value={this.state.password}
+						    	onChange={this.onChange}
+						    	placeholder="Enter password" 
+						    	className={"bg-dark text-white"}/>
+					</Form.Group>
+				</Form.Row>
+				<Form.Row>
+				  	<Form.Group as={Col} controlId="formGrid">
 				      	<Form.Label>Mail ID</Form.Label>
-				      <Form.Control required autoComplete="off"
-				      	type="email" name="mail"
-				      	value={this.state.mail}
-				    	onChange={this.onChange}
-				      	placeholder="Enter mail id"
-				      	className={"bg-dark text-white"}/>
+						 <Form.Control required autoComplete="off"
+						      	type="email" name="mail"
+						      	value={this.state.mail}
+						    	onChange={this.onChange}
+						      	placeholder="Enter mail id"
+						      	className={"bg-dark text-white"}/>
 				   </Form.Group>
-			  	</Form.Row>
+				    <Form.Group as={Col} controlId="formGrid">
+			  			<Form.Label>Mobile Number</Form.Label>
+			  			<Form.Control required autoComplete="off"
+						    	type="text" name="mobile_no"
+						    	value={this.state.mobile_no}
+						    	onChange={this.onChange}
+						    	placeholder="Enter mobile number" 
+						    	className={"bg-dark text-white"}/>
+			  		</Form.Group>
+			    </Form.Row>
+			    <Form.Row>
+			    	<Form.Group as={Col} controlId="formGrid">
+			      	<Form.Label>Age</Form.Label>
+			      		<Form.Control required autoComplete="off"
+						      	type="text" name="age"
+						      	value={this.state.age}
+						    	onChange={this.onChange}
+						      	placeholder="Enter your age"
+						      	className={"bg-dark text-white"}/>
+			      	 </Form.Group>
+			      	<Form.Group as={Col} controlId="formGrid">
+			      		<Form.Label>Sex</Form.Label>
+			      		<Form.Control required autoComplete="off"
+						    	type="text" name="sex"
+						    	value={this.state.sex}
+						    	onChange={this.onChange}
+						    	placeholder="Gender" 
+						    	className={"bg-dark text-white"}/>
+			      	 </Form.Group>
+			    </Form.Row>
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
 			 <Button size="sm" variant="success" type="submit">

@@ -7,7 +7,7 @@ import {faSave, faUndo} from '@fortawesome/free-solid-svg-icons';
 
 import MyToast from './MyToast';
 
-export default class Login extends React.Component {
+export default class userLogin extends React.Component {
 	
 	initialState = {id:'',password:''};
 	constructor(props) {
@@ -31,7 +31,7 @@ export default class Login extends React.Component {
 			if(response.data.id===user.id && response.data.password===user.password)
 			{
 				localStorage.setItem('loggedin',true);
-				this.props.history.push('/home');
+				this.props.history.push('/userHome');
 			} 
 			else{
 				alert("please fill valid details");
@@ -40,6 +40,10 @@ export default class Login extends React.Component {
 		}
 		}).catch(error => {alert("please fill valid details");
 				this.reset();});
+	}
+	
+	adminLogin =() =>{
+		this.props.history.push('/adminLogin');
 	}
 	
 	register =() =>{
@@ -64,7 +68,7 @@ export default class Login extends React.Component {
 				<MyToast children={{show: this.state.show, message:"User saved successfully"}}/>
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header> Login </Card.Header>
+			<Card.Header>User Login</Card.Header>
 			
 			<Form id="FormId" onSubmit={this.onSubmit} onReset={this.reset}>
 			<Card.Body>
@@ -90,6 +94,7 @@ export default class Login extends React.Component {
 			  	</Form.Row>
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
+			<Button size="sm" variant="secondary" onClick={this.adminLogin}>Admin Login</Button>{' '}
 			 <Button size="sm" variant="success" type="submit">
 			    <FontAwesomeIcon icon={faSave}/> Submit
 			  </Button>

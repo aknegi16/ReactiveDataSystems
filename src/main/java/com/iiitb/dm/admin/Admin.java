@@ -1,9 +1,9 @@
-package com.iiitb.dm.user;
+package com.iiitb.dm.admin;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 @Entity
-public class User {
+public class Admin {
 	
 	@Id
 	private String id;
@@ -12,14 +12,12 @@ public class User {
 	private String password;
 	private String age;
 	private String sex;
-	private String mobile_no;
 	
-	
-	public User() {}
+	public Admin() {}
 	
 	
 	
-	public User(String id, String name, String mail, String password, String age, String sex, String mobile_no) {
+	public Admin(String id, String name, String mail, String password, String age, String sex) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -27,10 +25,7 @@ public class User {
 		this.password = password;
 		this.age = age;
 		this.sex = sex;
-		this.mobile_no = mobile_no;
 	}
-
-
 
 	public String getMail() {
 		return mail;
@@ -76,15 +71,4 @@ public class User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-
-	public String getMobile_no() {
-		return mobile_no;
-	}
-
-
-
-	public void setMobile_no(String mobile_no) {
-		this.mobile_no = mobile_no;
-	}
-
 }

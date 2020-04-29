@@ -200,7 +200,7 @@ export default class Train extends React.Component {
 			  	<Form.Row>
 			  	   
 				  <Form.Group as={Col} controlId="formGriddate">
-				      	<Form.Label>Date & Time (dd:mm::yyyy hh:mm:ss)</Form.Label>
+				      	<Form.Label>Date & Time (dd.mm.yyyy hh:mm:ss)</Form.Label>
 				      <Form.Control required autoComplete="off"
 				      	type="text" name="date"
 				      	value={date}

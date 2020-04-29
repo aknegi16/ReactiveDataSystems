@@ -19,9 +19,10 @@ export default class NavigationBar extends React.Component {
 		return (
 		<Navbar bg="dark" variant="dark" fixed="top">
 			 <Nav className="container-fluid">
-			 <Link to={"home"} className="nav-link">Home</Link>
-		      <Link to={"add"} className="nav-link">Add a train</Link>
-		      <Link to={"list"} className="nav-link">Show all trains</Link>
+			  <Link to={"userHome"} className="nav-link">Home</Link>
+			  <Link to={"bookingHistory"} className="nav-link">Ticket history</Link>
+		      <Link to={"bookTrain"} className="nav-link">Book a train</Link>
+		      
 		      
 		      <Button className="ml-auto" size="sm" variant="secondary" onClick={this.logout}>Logout</Button>
 		    </Nav>

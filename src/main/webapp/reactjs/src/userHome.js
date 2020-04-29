@@ -6,15 +6,15 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import {Redirect} from 'react-router';
 
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './components/userNavigationBar';
 import Footer from './components/Footer';
 
-import Train from './components/Train';
-import TrainList from './components/TrainList';
-import Welcome from './components/Welcome';
+import bookingHistory from './components/bookingHistory';
+import bookTrain from './components/bookTrain';
+import userWelcome from './components/userWelcome';
 
 
-class home extends React.Component {
+class userHome extends React.Component {
 		constructor(props)
 		{
 			super(props);
@@ -37,14 +37,12 @@ class home extends React.Component {
 		    		<Row>
 		    			<Col lg={12} style={marginTop}>
 		    				<Switch>
-		    					<Route path="/home" exact component={Welcome}/>
-		    					<Route path="/add" exact component={Train}/>
-		    					<Route path="/list" exact component={TrainList}/>
-		    					<Route path="/edit/:id" exact component={Train}/>
+		    					<Route path="/userHome" exact component={userWelcome}/>" 
+		    					<Route path="/bookingHistory" exact component={bookingHistory}/>
+		    					<Route path="/bookTrain" exact component={bookTrain}/>
 		    				</Switch>
 		    			</Col>
 		    		</Row>
-		    	
 		    	</Container>
 		    	<Footer/>
 		    </Router>
@@ -52,4 +50,4 @@ class home extends React.Component {
 		}
 }
 
-export default home;
+export default userHome;
