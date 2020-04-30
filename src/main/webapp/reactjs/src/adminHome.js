@@ -7,8 +7,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Redirect} from 'react-router';
 
 import NavigationBar from './components/adminNavigationBar';
-import Footer from './components/Footer';
-
 import Train from './components/Train';
 import TrainList from './components/TrainList';
 import adminWelcome from './components/adminWelcome';
@@ -47,7 +45,6 @@ class adminHome extends React.Component {
 		    			</Col>
 		    		</Row>
 		    	</Container>
-		    	<Footer/>
 		    </Router>
 		  );
 		}

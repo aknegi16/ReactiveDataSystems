@@ -6,7 +6,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import userHome from './userHome';
 import adminHome from './adminHome';
-import Footer from './components/Footer';
 import userLogin from './components/userLogin';
 import Register from './components/Register';
 import adminLogin from './components/adminLogin';
