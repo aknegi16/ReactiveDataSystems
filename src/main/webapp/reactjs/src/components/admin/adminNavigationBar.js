@@ -22,7 +22,8 @@ export default class NavigationBar extends React.Component {
 			  <Link to={"adminHome"} className="nav-link">Home</Link>
 		      <Link to={"add"} className="nav-link">Add a train</Link>
 		      <Link to={"list"} className="nav-link">Show all trains</Link>
-		      <Link to={"adminCreateRule"} className="nav-link">Create new rules</Link>
+		      <Link to={"adminCreateRule"} className="nav-link">Create rules</Link>
+		      <Link to={"adminRuleList"} className="nav-link">All rules</Link>
 		      <Button className="ml-auto" size="sm" variant="secondary" onClick={this.logout}>Logout</Button>
 		    </Nav>
 		</Navbar>

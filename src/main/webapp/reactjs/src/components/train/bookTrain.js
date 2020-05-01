@@ -3,9 +3,9 @@ import axios from 'axios';
 
 import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faSave, faPlusSquare, faUndo} from '@fortawesome/free-solid-svg-icons';
 
-import MyToast from './MyToast';
+import MyToast from '../MyToast';
 
 export default class bookTrain extends React.Component {
 	
@@ -35,7 +35,7 @@ export default class bookTrain extends React.Component {
 		
 		axios.post("http://localhost:8001/rest/bookingDetails", bookTrain)
 		.then(response => {
-				if (response.data != null) {
+				if (response.data !== null) {
 					this.setState({"show":true});
 					setTimeout(() => this.setState({"show":false}), 3000);
 				} else {

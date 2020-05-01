@@ -5,7 +5,7 @@ import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
 
-import MyToast from './MyToast';
+import MyToast from '../MyToast';
 
 export default class Train extends React.Component {
 	
@@ -61,8 +61,8 @@ export default class Train extends React.Component {
 			dest :this.state.dest
 		}
 		
-		axios.post("http://localhost:8001/rest/trains/", train).
-		then(response => {
+		axios.post("http://localhost:8001/rest/trains/", train)
+		.then(response => {
 			if (response.data != null) {
 				this.setState({"show":true, "method":"post"});
 				setTimeout(() => this.setState({"show":false}), 3000);
@@ -85,8 +85,8 @@ export default class Train extends React.Component {
 				date :this.state.date,
 				dest :this.state.dest
 			}
-		axios.put("http://localhost:8001/rest/trains/"+train.trainId, train).
-		then(response => {
+		axios.put("http://localhost:8001/rest/trains/"+train.trainId, train)
+		.then(response => {
 			if (response.data != null) {
 				this.setState({"show":true, "method":"put"});
 				setTimeout(() => this.setState({"show":false}), 3000);

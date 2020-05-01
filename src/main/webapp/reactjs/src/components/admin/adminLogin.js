@@ -5,9 +5,8 @@ import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faUndo} from '@fortawesome/free-solid-svg-icons';
 
-import MyToast from './MyToast';
 
-export default class userLogin extends React.Component {
+export default class adminLogin extends React.Component {
 	
 	initialState = {id:'',password:''};
 	constructor(props) {
@@ -21,17 +20,17 @@ export default class userLogin extends React.Component {
 	onSubmit(event) {
 		event.preventDefault();
 		
-		const user = {
+		const admin = {
 			id: this.state.id,
 			password:this.state.password,
 		}
 		
-		axios.get("http://localhost:8001/rest/users/"+user.id).
-		then(response => {
-			if(response.data.id===user.id && response.data.password===user.password)
+		axios.get("http://localhost:8001/rest/admins/"+admin.id)
+		.then(response => {
+			if(response.data.id===admin.id && response.data.password===admin.password)
 			{
 				localStorage.setItem('loggedin',true);
-				this.props.history.push('/userHome');
+				this.props.history.push('/adminHome');
 			} 
 			else{
 				alert("please fill valid details");
@@ -40,14 +39,6 @@ export default class userLogin extends React.Component {
 		}
 		}).catch(error => {alert("please fill valid details");
 				this.reset();});
-	}
-	
-	adminLogin =() =>{
-		this.props.history.push('/adminLogin');
-	}
-	
-	register =() =>{
-		this.props.history.push('/register');
 	}
 	
 	reset = () => {
@@ -64,22 +55,19 @@ export default class userLogin extends React.Component {
 		
 		return(
 		<div>
-			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast children={{show: this.state.show, message:"User saved successfully"}}/>
-			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header>User Login</Card.Header>
+			<Card.Header>Admin Login </Card.Header>
 			
 			<Form id="FormId" onSubmit={this.onSubmit} onReset={this.reset}>
 			<Card.Body>
 			  	<Form.Row>
 				  	<Form.Group as={Col} controlId="formGrid">
-				  		<Form.Label>User Id</Form.Label>
+				  		<Form.Label>Admin Id</Form.Label>
 					    <Form.Control required autoComplete="off"
 					    	type="text" name="id"
 					    	value={id}
 					    	onChange={this.onChange}
-					    	placeholder="Enter user id" 
+					    	placeholder="Enter admin id" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
 				  <Form.Group as={Col} controlId="formGrid">
@@ -94,7 +82,6 @@ export default class userLogin extends React.Component {
 			  	</Form.Row>
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
-			<Button size="sm" variant="secondary" onClick={this.adminLogin}>Admin Login</Button>{' '}
 			 <Button size="sm" variant="success" type="submit">
 			    <FontAwesomeIcon icon={faSave}/> Submit
 			  </Button>
@@ -102,11 +89,6 @@ export default class userLogin extends React.Component {
 			    <Button size="sm" variant="info" type="reset">
 			    <FontAwesomeIcon icon={faUndo}/> Reset
 			  </Button>
-			    
-			    <br/><br/>
-			    <p> Not a user? {' '}
-			    		<Button size="sm" variant="secondary" onClick={this.register}>Register</Button>
-			    </p>
 			</Card.Footer>
 			</Form>
 			</Card>

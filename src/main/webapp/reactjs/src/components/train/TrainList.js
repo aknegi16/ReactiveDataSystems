@@ -5,7 +5,7 @@ import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
-import MyToast from './MyToast';
+import MyToast from '../MyToast';
 
 
 export default class TrainList extends React.Component {
@@ -35,7 +35,7 @@ export default class TrainList extends React.Component {
 				this.setState({"show":true});
 				setTimeout(() => this.setState({"show":false}), 3000);
 				this.setState({
-					trains: this.state.trains.filter(train => train.trainId != trainId)
+					trains: this.state.trains.filter(train => train.trainId !== trainId)
 				});
 			} else {
 				this.setState({"show":false});	

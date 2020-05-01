@@ -73,10 +73,8 @@ public class RuleService {
         }
     }
 
-    // UnMarshalling front end
     public List<Rule> ruleBaseUnmarshall() {
         try {
-
             File file = new File("RuleBase.xml");
 
             if (file.createNewFile()) {
@@ -101,6 +99,40 @@ public class RuleService {
         }
     }
     
+    public Rule getRuleById(int ruleId) {
+    	List<Rule> rules = ruleBaseUnmarshall();
+    	for (Rule rule : rules) {
+    		if (rule.getRuleId() == ruleId) {
+    			return rule;
+    		}
+    	}
+    	return null;
+    }
+    
+    //Deletes rule specified by ruleId, removes the file and puts back
+    // all the remaining rules back into the file
+    public void deleteRule(int ruleId) {
+    	List<Rule> rules = ruleBaseUnmarshall();
+    	Rule ruleToBeDeleted=null;
+    	for (Rule rule : rules) {
+    		if (rule.getRuleId() == ruleId) {
+    			ruleToBeDeleted = rule;
+    			break;
+    		}
+    	}
+    	rules.remove(ruleToBeDeleted);
+    	File file = new File("RuleBase.xml");
+    	file.delete();
+    	
+    	for (Rule rule : rules) {
+    		ruleBaseMarshall(rule);
+    	}
+    }
+    
+    public void updateRule(Rule rule, int ruleId) {
+    	deleteRule(ruleId);
+    	ruleBaseMarshall(rule);
+    }
     // function for forming the event, action queries for each rule
     public void rulePreprocessing() {
     	

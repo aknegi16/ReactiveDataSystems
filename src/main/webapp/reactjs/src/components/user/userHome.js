@@ -1,26 +1,21 @@
 import React from 'react';
-import './App.css';
+import '../../App.css';
 
 import {Container, Row ,Col} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import {Redirect} from 'react-router';
 
-import NavigationBar from './components/userNavigationBar';
-import Footer from './components/Footer';
+import NavigationBar from './userNavigationBar';
+import Footer from '../Footer';
 
-import bookingHistory from './components/bookingHistory';
-import bookTrain from './components/bookTrain';
-import userWelcome from './components/userWelcome';
+import bookingHistory from '../train/bookingHistory';
+import bookTrain from '../train/bookTrain';
+import userWelcome from './userWelcome';
 
 
 class userHome extends React.Component {
-		constructor(props)
-		{
-			super(props);
-		}
-		render()
-		{
+	render() {
 		  const marginTop = {
 					marginTop: "40px"
 			};

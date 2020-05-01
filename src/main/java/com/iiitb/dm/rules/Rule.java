@@ -2,7 +2,8 @@ package com.iiitb.dm.rules;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public class Rule {	
+public class Rule {
+	 private int ruleId;
 	 private String rule_description;
 	 private String table;
 	 private Event event;
@@ -10,6 +11,13 @@ public class Rule {
 	 private String rule_type;
 	 private String rule_status;
 	 
+
+	public int getRuleId() {
+		return ruleId;
+	}
+	public void setRuleId(int ruleId) {
+		this.ruleId = ruleId;
+	}
 	public String getRule_description() {
 		return rule_description;
 	}
@@ -58,9 +66,10 @@ public class Rule {
 	
 	public Rule() {}
 	
-	public Rule(String rule_description, String table, Event event, Action action, String rule_type,
+	public Rule(int ruleId, String rule_description, String table, Event event, Action action, String rule_type,
 			String rule_status) {
 		super();
+		this.ruleId = ruleId;
 		this.rule_description = rule_description;
 		this.table = table;
 		this.event = event;

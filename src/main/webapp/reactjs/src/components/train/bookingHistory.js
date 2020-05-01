@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Card, Table} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faList} from '@fortawesome/free-solid-svg-icons';
 
 export default class bookingHistory extends React.Component {
 	constructor(props){
@@ -42,11 +41,11 @@ export default class bookingHistory extends React.Component {
 	deleteTrain = (bookingId) => {
 		axios.delete("http://localhost:8001/rest/bookingDetails/"+bookingId)
 		.then(response => {
-			if (response.data != null) {
+			if (response.data !== null) {
 				this.setState({"show":true});
 				setTimeout(() => this.setState({"show":false}), 3000);
 				this.setState({
-					bookingDetails: this.state.bookingDetails.filter(bookingDetails => bookingDetails.bookingId != bookingId)
+					bookingDetails: this.state.bookingDetails.filter(bookingDetails => bookingDetails.bookingId !== bookingId)
 				});
 			} else {
 				this.setState({"show":false});	

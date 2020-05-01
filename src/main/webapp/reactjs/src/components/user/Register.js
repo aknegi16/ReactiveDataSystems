@@ -5,7 +5,7 @@ import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faUndo, faPlusSquare} from '@fortawesome/free-solid-svg-icons';
 
-import MyToast from './MyToast';
+import MyToast from '../MyToast';
 
 export default class Register extends React.Component {
 	
@@ -36,24 +36,21 @@ export default class Register extends React.Component {
 			sex: this.state.sex
 		}
 		
-		axios.get("http://localhost:8001/rest/users/"+user.id).
-		then(response => {
+		axios.get("http://localhost:8001/rest/users/"+user.id)
+		.then(response => {
 			if(response.data.id===user.id)
 			{
 				alert("Sorry, User Id already exists");
 				this.reset();
 				return this.props.history.push('/register');
 			}
-		}).
-		catch(error=>{
-		
-		axios.post("http://localhost:8001/rest/users", user).
-		then(response => {
+		}).catch(error => {	
+		axios.post("http://localhost:8001/rest/users", user)
+		.then(response => {
 				this.setState({"show":true, "method":"post"});
 				setTimeout(() => this.setState({"show":false}), 3000);
 				this.props.history.push('/register');
-		}).
-		catch(error => alert("please enter valid inputs"));
+		}).catch(error => alert("please enter valid inputs"+error));
 		});
 		
 	}

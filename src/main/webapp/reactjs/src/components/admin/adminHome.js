@@ -1,23 +1,19 @@
 import React from 'react';
-import './App.css';
 
 import {Container, Row ,Col} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import {Redirect} from 'react-router';
 
-import NavigationBar from './components/adminNavigationBar';
-import Train from './components/Train';
-import TrainList from './components/TrainList';
-import adminWelcome from './components/adminWelcome';
-import adminCreateRule from './components/adminCreateRule';
+import NavigationBar from './adminNavigationBar';
+import Train from '../train/Train';
+import TrainList from '../train/TrainList';
 
+import adminWelcome from './adminWelcome';
+import adminCreateRule from './adminCreateRule';
+import adminRuleList from './adminRuleList';
 
 class adminHome extends React.Component {
-		constructor(props)
-		{
-			super(props);
-		}
 		render()
 		{
 		  const marginTop = {
@@ -40,7 +36,9 @@ class adminHome extends React.Component {
 		    					<Route path="/add" exact component={Train}/>
 		    					<Route path="/list" exact component={TrainList}/>
 		    					<Route path="/edit/:id" exact component={Train}/>
-		    					<Route path="/adminCreateRule" exact component={adminCreateRule}/>	
+		    					<Route path="/adminCreateRule" exact component={adminCreateRule}/>
+		    					<Route path="/adminRuleList" exact component={adminRuleList}/>
+		    					<Route path="/editRule/:id" exact component={adminCreateRule}/>
 		    				</Switch>
 		    			</Col>
 		    		</Row>
