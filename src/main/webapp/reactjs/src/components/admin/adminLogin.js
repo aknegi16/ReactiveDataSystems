@@ -45,6 +45,10 @@ export default class adminLogin extends React.Component {
 		this.setState(() => this.initialState);
 	}
 
+	back = () => {
+		this.props.history.push('/');
+	}
+	
 	onChange(event) {
 		this.setState({
 			[event.target.name]:event.target.value
@@ -89,6 +93,10 @@ export default class adminLogin extends React.Component {
 			    <Button size="sm" variant="info" type="reset">
 			    <FontAwesomeIcon icon={faUndo}/> Reset
 			  </Button>
+			    {' '}
+			    <Button size="sm" variant="secondary" onClick={this.back}>Back
+			    </Button>
+			    
 			</Card.Footer>
 			</Form>
 			</Card>

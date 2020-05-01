@@ -12,6 +12,7 @@ export default class NavigationBar extends React.Component {
 
 	logout=()=>{
 		localStorage.clear("loggedin");
+		localStorage.clear("usr");
 		this.props.history.push("/");
 	}
 	

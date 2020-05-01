@@ -50,6 +50,7 @@ export default class Register extends React.Component {
 				this.setState({"show":true, "method":"post"});
 				setTimeout(() => this.setState({"show":false}), 3000);
 				this.props.history.push('/register');
+				this.reset();
 		}).catch(error => alert("please enter valid inputs"+error));
 		});
 		

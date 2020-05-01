@@ -18,7 +18,17 @@ export default class bookingHistory extends React.Component {
 		this.getAllBookingDetails();
 	}
 	
+	getAllBookingDetails() {
+		let usr = JSON.parse(localStorage.getItem('usr'));
+		axios.get("http://localhost:8001/rest/bookingDetails/user/"+usr)
+		.then(response => response.data)
+		.then( (data) =>{
+			this.setState({bookingDetails: data});
+		});
+	}
 	
+	
+	/*
 	getAllBookingDetails() {
 		axios.get("http://localhost:8001/rest/bookingDetails")
 		.then(response => response.data)
@@ -27,7 +37,7 @@ export default class bookingHistory extends React.Component {
 		});
 	}
 	
-	/*	
+		
 	getAllBookingDetails(){
 		axios.get("http://localhost:8001/rest/bookingDetails")
 		.then(response => {
@@ -36,7 +46,7 @@ export default class bookingHistory extends React.Component {
 			});
 		});
 	}
-	*/
+	
 	
 	deleteTrain = (bookingId) => {
 		axios.delete("http://localhost:8001/rest/bookingDetails/"+bookingId)
@@ -52,6 +62,8 @@ export default class bookingHistory extends React.Component {
 			}
 		});
 	}
+	
+	*/
 	render() {
 		return(
 				<div>
@@ -76,7 +88,7 @@ export default class bookingHistory extends React.Component {
 				  {
 					  this.state.bookingDetails.length === 0 ?
 					    <tr align="center">
-					    	<td colSpan="7">No bookingDetails available</td>
+					    	<td colSpan="8">No bookingDetails available</td>
 					    </tr> :
 					    	this.state.bookingDetails.map((bookingDetails) =>
 					    	<tr align="center" key={bookingDetails.bookingId}>

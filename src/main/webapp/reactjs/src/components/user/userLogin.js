@@ -31,6 +31,7 @@ export default class userLogin extends React.Component {
 			if(response.data.id===user.id && response.data.password===user.password)
 			{
 				localStorage.setItem('loggedin',true);
+				localStorage.setItem('usr',user.id);
 				this.props.history.push('/userHome');
 			} 
 			else{
