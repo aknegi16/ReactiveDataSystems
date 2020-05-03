@@ -119,11 +119,23 @@ export default class adminCreateRule extends React.Component {
 			if (response.data) {
 				alert("Rule added into list");
 			} else {
-				alert("Response was false, so kuch gadbad hai, dekhle backend me");
+				alert("False response");
 			}
 		});
 		this.setState(this.initialState);
 	};
+	
+	handleAddRow = () => {
+		/*
+	    const item = {
+	      name: "",
+	      mobile: ""
+	    };
+	    this.setState({
+	      rows: [...this.state.rows, item]
+	    });
+	    */
+	  };
 	
 	updateRule = event => {
 		event.preventDefault();
@@ -172,6 +184,15 @@ export default class adminCreateRule extends React.Component {
 			[e.target.name]:e.target.value
 		});
 	};
+	
+	/*
+	addRow = (e) => {
+        let stateClone = JSON.parse(JSON.stringify(this.state));
+        stateClone.options.push(this.defaultOption);
+        this.setState({ options: stateClone.options });
+        e.preventDefault();
+    }
+	*/
 	
 	ruleList = () => {
 		return this.props.history.push("/adminRuleList");
@@ -272,21 +293,33 @@ export default class adminCreateRule extends React.Component {
 			    	placeholder="Enter value" 
 			    	className={"bg-dark text-white"}/>
 				</Form.Group>
-			    <Form.Group as={Col} controlId="conjunction">
-		  		<Form.Label>Conjunction</Form.Label>
-			    <Form.Control autoComplete="off" as="select"
-			    	type="text" name="conjunction"
-			    	value={conjunction}
-			    	onChange={this.ruleChange}
-			    	className={"bg-dark text-white"}>
-				    <option>Choose</option>
-				    <option>none</option>
-				    <option>or</option>
-				    <option>and</option>
-				</Form.Control>
-				</Form.Group>
+			    {
+			    /*
+				<Form.Group as={Col} controlId="addRow" style={{"textAlign":"center"}}>
+				<Form.Label>Add Row</Form.Label><br/>
+				 <button size="sm" variant="info" type="button" onClick={this.addRow} style={{"textAlign":"center"}}>
+				 <FontAwesomeIcon icon={faPlusSquare}/>
+				 </button>
+				 </Form.Group>
 				</Form.Row>
 				
+				<Form.Row>
+				*/
+			    }
+				 <Form.Group as={Col} controlId="conjunction">
+			  		<Form.Label>Conjunction</Form.Label>
+				    <Form.Control autoComplete="off" as="select"
+				    	type="text" name="conjunction"
+				    	value={conjunction}
+				    	onChange={this.ruleChange}
+				    	className={"bg-dark text-white"}>
+					    <option>Choose</option>
+					    <option>none</option>
+					    <option>or</option>
+					    <option>and</option>
+					</Form.Control>
+					</Form.Group>
+				</Form.Row>
 				<Form.Row>
 				<Form.Group as={Col} controlId="action_type">
 			  		<Form.Label>Action Type</Form.Label>

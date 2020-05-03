@@ -9,7 +9,7 @@ import MyToast from '../MyToast';
 
 export default class bookTrain extends React.Component {
 	
-	initialState = {bookingId:'',trainId:'',trainName:'',userId:'',userName:'',src:'',dest:'',seatsReserved:'',date:'' };;
+	initialState = {bookingId:'',trainId:'',trainName:'',userId:'',src:'',dest:'',seatsReserved:'',date:'',pnr:'' };;
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
@@ -26,11 +26,12 @@ export default class bookTrain extends React.Component {
 				trainId: this.state.trainId,
 				trainName:this.state.trainName,
 				userId: this.state.userId,
-				userName: this.state.userName,
 				src :this.state.src,
 				dest :this.state.dest,
 				seatsReserved: this.state.seatsReserved,
-				date :this.state.date
+				date :this.state.date,
+				userId : JSON.parse(localStorage.getItem('usr')),
+				pnr : Math.floor(Math.random() * 10000000000)+1
 			}
 		
 		axios.post("http://localhost:8001/rest/bookingDetails", bookTrain)
@@ -99,26 +100,7 @@ export default class bookTrain extends React.Component {
 							    	className={"bg-dark text-white"}/>
 						</Form.Group>
 					</Form.Row>
-					<Form.Row>
-					  	<Form.Group as={Col} controlId="formGrid">
-					      	<Form.Label>User Id</Form.Label>
-							 <Form.Control required autoComplete="off"
-							      	type="text" name="userId"
-							      	value={this.state.userId}
-							    	onChange={this.bookTrainChange}
-							      	placeholder="Enter user id"
-							      	className={"bg-dark text-white"}/>
-					   </Form.Group>
-					    <Form.Group as={Col} controlId="formGrid">
-				  			<Form.Label>User Name</Form.Label>
-				  			<Form.Control required autoComplete="off"
-							    	type="text" name="userName"
-							    	value={this.state.userName}
-							    	onChange={this.bookTrainChange}
-							    	placeholder="Enter user name" 
-							    	className={"bg-dark text-white"}/>
-				  		</Form.Group>
-				    </Form.Row>
+					
 				    <Form.Row>
 				  	   <Form.Group as={Col} controlId="formGridsrc">
 					  		<Form.Label>Source</Form.Label>

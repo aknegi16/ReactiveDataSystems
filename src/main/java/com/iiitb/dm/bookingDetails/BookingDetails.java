@@ -15,7 +15,6 @@ public class BookingDetails {
 	private String trainId;
 	private String trainName;
 	private String userId;
-	private String userName;
 	private String src;
 	private String dest;
 	private String seatsReserved;
@@ -28,14 +27,13 @@ public class BookingDetails {
 	public BookingDetails() {}
 	
 	
-	public BookingDetails(String bookingId, String trainId, String trainName, String userId, String userName, String src, String dest,
+	public BookingDetails(String bookingId, String trainId, String trainName, String userId, String src, String dest,
 			String seatsReserved, String pnr, String date, String status) {
 		super();
 		this.bookingId = bookingId;
 		this.trainId= trainId;
 		this.trainName= trainName;
 		this.userId= userId;
-		this.userName= userName;
 		this.src= src;
 		this.dest= dest;
 		this.seatsReserved= seatsReserved;
@@ -83,16 +81,6 @@ public class BookingDetails {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-
-	public String getUserName() {
-		return userName;
-	}
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 
