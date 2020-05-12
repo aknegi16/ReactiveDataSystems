@@ -85,7 +85,7 @@ export default class adminRuleList extends React.Component {
 						    	
 						    	)}</td>
 						    	<td>{
-						    		rule.action.action_type === 'query' ? <p>{rule.action.query}</p> : <p>{rule.action.method_path}</p>
+						    		rule.action.action_type === 'method' ? <p>{rule.action.method_path}</p>:<p>{rule.action.query}</p> 
 						    	}</td>
 						    	<td>{rule.rule_type}</td>
 						    	<td>{rule.rule_status}</td>

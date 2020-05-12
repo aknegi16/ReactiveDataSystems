@@ -222,6 +222,7 @@ export default class adminCreateRule extends React.Component {
 							onChange={this.ruleChange}
 							className={"bg-dark text-white"}>
 							    <option>Choose</option>
+							    <option>=</option>
 							    <option>==</option>
 							    <option>!=</option>
 							    <option>&lt;</option>
@@ -341,7 +342,8 @@ export default class adminCreateRule extends React.Component {
 				    	onChange={this.ruleChange}
 				    	className={"bg-dark text-white"}>
 				    <option>Choose</option>
-				    <option>query</option>
+				    <option>insert</option>
+				    <option>update</option>
 				    <option>method</option>
 				    </Form.Control>
 				</Form.Group>
