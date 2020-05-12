@@ -43,10 +43,8 @@ export default class adminCreateRule extends React.Component {
 	}
 	
 	findRuleById = (ruleId) => {
-		debugger;
 		axios.get("http://localhost:8001/rest/rules/"+ruleId)
 		.then(response => {
-			debugger;
 			if (response.data != null) {
 				this.setState({
 					ruleId: response.data.ruleId,
@@ -172,13 +170,11 @@ export default class adminCreateRule extends React.Component {
 	};
 	
 	deleteCondition = (index) => {
-		debugger;
 		var condList = this.state.condition;
 		condList.splice(index, 1);
 	    this.setState({condition: condList});
 	};
 	renderConditions = () => {
-		debugger;
 		const list = this.state.condition || this.state.event.conditions.condition;
 		if (this.state.event.conditions.condition) {
 			const conditions1 = list.map( (con, i) => (
