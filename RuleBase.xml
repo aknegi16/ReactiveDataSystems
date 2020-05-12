@@ -43,4 +43,77 @@
         <rule_type>immediate</rule_type>
         <table>t2</table>
     </Rule>
+    <Rule>
+        <Action>
+            <action_type>query</action_type>
+            <query>insert into table t3 values (1,3,4);</query>
+        </Action>
+        <Event>
+            <conditions>
+                <condition>
+                    <attribute>t4</attribute>
+                    <operator>&gt;</operator>
+                    <value>22</value>
+                </condition>
+            </conditions>
+            <event_type>insert</event_type>
+        </Event>
+        <ruleId>491376</ruleId>
+        <rule_description>new rule</rule_description>
+        <rule_status>Active</rule_status>
+        <rule_type>immediate</rule_type>
+        <table>t2</table>
+    </Rule>
+    <Rule>
+        <Action>
+            <action_type>method</action_type>
+            <method_path>sdflksdfskldf</method_path>
+        </Action>
+        <Event>
+            <conditions>
+                <condition>
+                    <attribute>sdf</attribute>
+                    <operator>!=</operator>
+                    <value>34</value>
+                </condition>
+                <condition>
+                    <attribute>sdf</attribute>
+                    <operator>!=</operator>
+                    <value>44</value>
+                </condition>
+                <condition>
+                    <attribute>sfdsssss</attribute>
+                    <operator>&lt;=</operator>
+                    <value>44</value>
+                </condition>
+            </conditions>
+            <event_type>select</event_type>
+        </Event>
+        <ruleId>767118</ruleId>
+        <rule_description>abc</rule_description>
+        <rule_status>Active</rule_status>
+        <rule_type>defered</rule_type>
+        <table>train</table>
+    </Rule>
+    <Rule>
+        <Action>
+            <action_type>query</action_type>
+            <query>select * from user</query>
+        </Action>
+        <Event>
+            <conditions>
+                <condition>
+                    <attribute>dsf</attribute>
+                    <operator>&lt;=</operator>
+                    <value>234</value>
+                </condition>
+            </conditions>
+            <event_type>update</event_type>
+        </Event>
+        <ruleId>326604</ruleId>
+        <rule_description>New Rule</rule_description>
+        <rule_status>Idk</rule_status>
+        <rule_type></rule_type>
+        <table>dfsdf</table>
+    </Rule>
 </RuleBase>

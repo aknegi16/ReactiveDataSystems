@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Card, Form, Button, Col} from 'react-bootstrap';
+import {Card, Form, Button, Col, DeleteButton} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faSave, faPlusSquare, faUndo, faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import MyToast from '../MyToast';
 
 export default class adminCreateRule extends React.Component {
@@ -13,17 +13,11 @@ export default class adminCreateRule extends React.Component {
 		event:{
 			event_type:'',
 			conditions: {
-				condition:[
-					{
-						attribute:'',
-						operator:'',
-						value:''
-					}
-				],
+				condition:[],
 				conjunction:''
 			}
 		},
-		action:{
+		action: {
 			action_type:'',
 			query:'',
 			method_path:''
@@ -39,6 +33,7 @@ export default class adminCreateRule extends React.Component {
 		this.state.show = false;
 		this.ruleChange = this.ruleChange.bind(this);
 		this.submitRule = this.submitRule.bind(this);
+		this.addCondition = this.addCondition.bind(this);
 	}
 	componentDidMount() {
 		const ruleId =+this.props.match.params.id;
@@ -48,8 +43,10 @@ export default class adminCreateRule extends React.Component {
 	}
 	
 	findRuleById = (ruleId) => {
+		debugger;
 		axios.get("http://localhost:8001/rest/rules/"+ruleId)
 		.then(response => {
+			debugger;
 			if (response.data != null) {
 				this.setState({
 					ruleId: response.data.ruleId,
@@ -58,11 +55,9 @@ export default class adminCreateRule extends React.Component {
 					rule_type: response.data.rule_type,
 					rule_status: response.data.rule_status,
 					event_type: response.data.event.event_type,
-					attribute: response.data.event.conditions.condition[0].attribute,
-					operator: response.data.event.conditions.condition[0].operator,
-					value: response.data.event.conditions.condition[0].value,
+					condition: response.data.event.conditions.condition,
 					action_type: response.data.action.action_type,
-					method_type: response.data.action.method_type,
+					method_path: response.data.action.method_path,
 					query: response.data.action.query
 				});
 			}
@@ -74,14 +69,9 @@ export default class adminCreateRule extends React.Component {
 		const ruleId=Math.random() * 1000000;
 		const rule_description = this.state.rule_description;
 		const table = this.state.table;
-		const condition = [{
-			attribute: this.state.attribute,
-			operator: this.state.operator,
-			value: this.state.value
-		}];
 		const conjunction = this.state.conjunction;
 		const conditions = {
-				condition: condition,
+				condition: this.state.condition,
 				conjunction: conjunction
 			}
 		const event_type = this.state.event_type;
@@ -113,7 +103,6 @@ export default class adminCreateRule extends React.Component {
 			rule_type: rule_type,
 			rule_status: rule_status
 		};
-		
 		axios.post("http://localhost:8001/rest/rules", rule)
 		.then(response => {
 			if (response.data) {
@@ -125,18 +114,6 @@ export default class adminCreateRule extends React.Component {
 		this.setState(this.initialState);
 	};
 	
-	handleAddRow = () => {
-		/*
-	    const item = {
-	      name: "",
-	      mobile: ""
-	    };
-	    this.setState({
-	      rows: [...this.state.rows, item]
-	    });
-	    */
-	  };
-	
 	updateRule = event => {
 		event.preventDefault();
 		const action = {
@@ -144,13 +121,9 @@ export default class adminCreateRule extends React.Component {
 				query: this.state.query,
 				method_path: this.state.method_path
 		}
-		const condition = [{
-				attribute: this.state.attribute,
-				operator: this.state.operator,
-				value: this.state.value
-		}]
+
 		const conditions = {
-				condition: condition,
+				condition: this.state.condition,
 				conjunction: this.state.conjunction
 		}
 		const event1 = {
@@ -184,16 +157,109 @@ export default class adminCreateRule extends React.Component {
 			[e.target.name]:e.target.value
 		});
 	};
+
+	addCondition = () => {
+		if (this.attributeTextInput.value.length > 0 && this.valueTextInput.value.length > 0) {
+			const cond = {
+				attribute: this.attributeTextInput.value,
+				operator: this.operatorSelect.value,
+				value: this.valueTextInput.value
+			};
+			const list = this.state.event.conditions.condition;
+			list.push(cond);
+			this.setState({condition: list});
+		}
+	};
 	
-	/*
-	addRow = (e) => {
-        let stateClone = JSON.parse(JSON.stringify(this.state));
-        stateClone.options.push(this.defaultOption);
-        this.setState({ options: stateClone.options });
-        e.preventDefault();
-    }
-	*/
+	deleteCondition = (index) => {
+		debugger;
+		var condList = this.state.condition;
+		condList.splice(index, 1);
+	    this.setState({condition: condList});
+	};
+	renderConditions = () => {
+		debugger;
+		const list = this.state.condition || this.state.event.conditions.condition;
+		if (this.state.event.conditions.condition) {
+			const conditions1 = list.map( (con, i) => (
+				<span key={i}>
+					<Form.Row>
+						<Form.Group as={Col}>
+							<Form.Label>Attribute</Form.Label><br/>
+							<Form.Label>{con.attribute}</Form.Label>
+						</Form.Group>
+						<Form.Group as={Col}>
+							<Form.Label>Operator</Form.Label><br/>
+							<Form.Label>{con.operator}</Form.Label>
+						</Form.Group>
+						<Form.Group as={Col}>
+							<Form.Label>Value</Form.Label><br/>
+							<Form.Label>{con.value}</Form.Label>
+						</Form.Group>
+						<span>
+							<Form.Label>Delete</Form.Label><br/>
+							<Button size="sm" variant="outline-danger" onClick ={this.deleteCondition.bind(this, i)} index={i}>
+								<FontAwesomeIcon icon={faTrash}/>
+							</Button>
+						</span>
+					</Form.Row>
+				</span>
+			));
+			return (
+				<div>
+					<div>
+					<Form.Row>
+						<Form.Group as={Col} controlId="attribute">
+							<Form.Label>Attribute</Form.Label>
+							<Form.Control autoComplete="off"
+							ref={(ref) => this.attributeTextInput = ref}
+							type="text" name="attribute"
+							onChange={this.ruleChange}
+							placeholder="Enter Attribute"
+							className={"bg-dark text-white"}/>
+							</Form.Group>
+							<Form.Group as={Col} controlId="operator">
+							<Form.Label>Operator</Form.Label>
+							<Form.Control autoComplete="off" as="select"
+							ref={(ref) => this.operatorSelect = ref}
+							type="text" name="operator"
+							onChange={this.ruleChange}
+							className={"bg-dark text-white"}>
+							    <option>Choose</option>
+							    <option>==</option>
+							    <option>!=</option>
+							    <option>&lt;</option>
+							    <option>&lt;=</option>
+							    <option>&gt;</option>
+							    <option>&gt;=</option>
+							</Form.Control>
+						</Form.Group>
+						<Form.Group as={Col} controlId="value">
+							<Form.Label>Value</Form.Label>
+							<Form.Control autoComplete="off"
+							ref={(ref) => this.valueTextInput = ref}
+							type="text" name="value"
+							onChange={this.ruleChange}
+							placeholder="Enter value"
+							className={"bg-dark text-white"}/>
+						</Form.Group>
+						<span>
+							<Form.Label>Add</Form.Label><br/>
+							<Button size="sm" variant="outline-info" className="btn btn-sm btn-outline-primary"
+							onClick={this.addCondition}> <FontAwesomeIcon icon={faPlusSquare}/></Button> {' '}
+						</span>
+					</Form.Row>
+					</div>
+					{conditions1}
+				</div>
+			);
+		}
+		return;
+	}
 	
+	resetRule = () => {
+		this.setState(() => this.initialState);
+	};
 	ruleList = () => {
 		return this.props.history.push("/adminRuleList");
 	};
@@ -201,9 +267,6 @@ export default class adminCreateRule extends React.Component {
 		const rule_description = this.state.rule_description;
 		const table = this.state.table;
 		const event_type = this.state.event_type;
-		const attribute = this.state.attribute;
-		const operator = this.state.operator;
-		const value = this.state.value;
 		const conjunction = this.state.conjunction;
 		const action_type = this.state.action_type;
 		const query = this.state.query;
@@ -256,58 +319,8 @@ export default class adminCreateRule extends React.Component {
 				    	<option>update</option>
 				    </Form.Control>
 					</Form.Group>
-			  	</Form.Row>
-				
-			  	<Form.Row>
-				<Form.Group as={Col} controlId="attribute">
-			  		<Form.Label>Attribute</Form.Label>
-				    <Form.Control autoComplete="off"
-				    	type="text" name="attribute"
-				    	value={attribute}
-				    	onChange={this.ruleChange}
-				    	placeholder="Enter Attribute" 
-				    	className={"bg-dark text-white"}/>
-				</Form.Group>
-			    <Form.Group as={Col} controlId="operator">
-		  		<Form.Label>Operator</Form.Label>
-			    <Form.Control autoComplete="off" as="select"
-			    	type="text" name="operator"
-			    	value={operator}
-			    	onChange={this.ruleChange}
-			    	className={"bg-dark text-white"}>
-				    <option>Choose</option>
-				    <option>==</option>
-				    <option>!=</option>
-				    <option>&lt;</option>
-				    <option>&lt;=</option>
-				    <option>&gt;</option>
-				    <option>&gt;=</option>
-			    </Form.Control>
-				</Form.Group>
-				<Form.Group as={Col} controlId="value">
-		  		<Form.Label>Value</Form.Label>
-			    <Form.Control autoComplete="off"
-			    	type="text" name="value"
-			    	value={value}
-			    	onChange={this.ruleChange}
-			    	placeholder="Enter value" 
-			    	className={"bg-dark text-white"}/>
-				</Form.Group>
-			    {
-			    /*
-				<Form.Group as={Col} controlId="addRow" style={{"textAlign":"center"}}>
-				<Form.Label>Add Row</Form.Label><br/>
-				 <button size="sm" variant="info" type="button" onClick={this.addRow} style={{"textAlign":"center"}}>
-				 <FontAwesomeIcon icon={faPlusSquare}/>
-				 </button>
-				 </Form.Group>
-				</Form.Row>
-				
-				<Form.Row>
-				*/
-			    }
-				 <Form.Group as={Col} controlId="conjunction">
-			  		<Form.Label>Conjunction</Form.Label>
+					<Form.Group as={Col} controlId="conjunction">
+					<Form.Label>Condition Conjunction</Form.Label>
 				    <Form.Control autoComplete="off" as="select"
 				    	type="text" name="conjunction"
 				    	value={conjunction}
@@ -320,6 +333,9 @@ export default class adminCreateRule extends React.Component {
 					</Form.Control>
 					</Form.Group>
 				</Form.Row>
+
+			    {this.renderConditions()}
+
 				<Form.Row>
 				<Form.Group as={Col} controlId="action_type">
 			  		<Form.Label>Action Type</Form.Label>
