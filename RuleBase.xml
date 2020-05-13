@@ -2,7 +2,7 @@
 <RuleBase>
     <Rule>
         <Action>
-            <action_type>query</action_type>
+            <action_type>update</action_type>
             <query>update train set remaining_seats=remaining_seats+10 where train_id=?</query>
         </Action>
         <Event>
@@ -18,29 +18,28 @@
         <ruleId>1</ruleId>
         <rule_description>Adding extra compartments (seats) on demand</rule_description>
         <rule_status>Active</rule_status>
-        <rule_type>deferred</rule_type>
+        <rule_type>defered</rule_type>
         <table>train</table>
     </Rule>
     <Rule>
         <Action>
-            <action_type>query</action_type>
-            <query>select * from t2</query>
+            <action_type>method</action_type>
+            <method_path>sendmail</method_path>
         </Action>
         <Event>
             <conditions>
                 <condition>
-                    <attribute>a1</attribute>
-                    <operator>&gt;</operator>
-                    <value>25</value>
+                    <attribute>sex</attribute>
+                    <operator>=</operator>
+                    <value>"F"</value>
                 </condition>
-                <conjunction>none</conjunction>
             </conditions>
-            <event_type>update</event_type>
+            <event_type>select</event_type>
         </Event>
-        <ruleId>542161</ruleId>
-        <rule_description>rule2</rule_description>
-        <rule_status>active</rule_status>
-        <rule_type>immediate</rule_type>
-        <table>t2</table>
+        <ruleId>27706</ruleId>
+        <rule_description>send mail</rule_description>
+        <rule_status>Active</rule_status>
+        <rule_type>defered</rule_type>
+        <table>admin</table>
     </Rule>
 </RuleBase>

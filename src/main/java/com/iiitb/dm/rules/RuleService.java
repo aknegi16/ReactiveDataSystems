@@ -1,5 +1,6 @@
 package com.iiitb.dm.rules;
 
+import java.lang.reflect.*;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +21,19 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Service;
 
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
 @Service
 public class RuleService {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 
 	/*
 	 * Sample JSON request
@@ -165,17 +174,51 @@ public class RuleService {
     			// action query
     			action=rule.getAction().getQuery();
     			actiontype=rule.getAction().getAction_type();
+    			System.out.println(actiontype);
+    			if(actiontype.equals("method"))
+    			{
+    				System.out.println("method");
+    				action=rule.getAction().getMethod_path();
+    			}
     			
     			System.out.println(event);
     			System.out.println(action);
     			
-    			ruleExecute(event,action,actiontype);
+    			try {
+    				ruleExecute(event,action,actiontype);
+    			}
+    			catch (Exception e) {
+					// TODO: handle exception
+				}
     		}
     	}
     }
     
+    public void sendmail(String toMail) throws MailException
+    {
+    	System.out.println("Begin mail");
+    	System.out.println(toMail);
+    
+    	try {
+    	
+	    	SimpleMailMessage msgMailMessage=new SimpleMailMessage();
+	    	
+	    	msgMailMessage.setTo(toMail);
+	    	msgMailMessage.setSubject("From spring boot");
+	    	msgMailMessage.setText("Hey");
+	    	
+	    	System.out.println("2");
+	        
+	    	javaMailSender.send(msgMailMessage);
+	        System.out.println("Done");
+    	}
+    	catch(Exception e) {
+    		System.out.println(e.toString());
+    	}
+    }
     // function for executing the action
-    public void ruleExecute(String event,String action,String actiontype){
+    public void ruleExecute(String event,String action,String actiontype) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, NoSuchMethodException
+    {
     	
     	String actionSelectString="";
     	
@@ -183,6 +226,8 @@ public class RuleService {
     		actionSelectString="Select * from "+(action.split(" "))[2]+"";
     	else if(actiontype.equals("update"))
     		actionSelectString="Select * from "+(action.split(" "))[1]+"";
+    	else if(actiontype.equals("method"))
+    		actionSelectString=event;
 		
 		try {
 				// finding the column names of action query table
@@ -245,6 +290,33 @@ public class RuleService {
 	                                    e.printStackTrace();
 	                                }
 	                		}
+                		}
+                		else if(actiontype.equals("method"))
+                		{
+                			System.out.println(action);
+                			RuleService cls = new RuleService();
+                	        Class c = cls.getClass();
+                	        
+                	        if(action.equals("sendmail"))
+                	        {
+                	        	while(eventResultSet.next())
+    	                		{
+                	        		sendmail(eventResultSet.getString("mail"));
+    	                		}
+                	        }
+                	        else {
+
+	                	        try {          
+	                	           // parameter type is null
+		                	           Method m = c.getDeclaredMethod(action,String.class);
+		                	           System.out.println("method = " + m.toString());
+		                	           m.invoke(cls,"method");
+	
+		                	        } catch(Exception e) {
+		                	           //System.out.println(e.toString());
+		                	           System.out.println(e.getCause());
+		                	        }
+                	        }
                 		}
 						return eventResultSet;
 	                        }});
