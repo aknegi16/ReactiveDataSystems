@@ -12,7 +12,7 @@ import Footer from '../Footer';
 import bookingHistory from '../train/bookingHistory';
 import bookTrain from '../train/bookTrain';
 import userWelcome from './userWelcome';
-
+import userChangePassword from './userChangePassword';
 
 class userHome extends React.Component {
 	render() {
@@ -32,9 +32,10 @@ class userHome extends React.Component {
 		    		<Row>
 		    			<Col lg={12} style={marginTop}>
 		    				<Switch>
-		    					<Route path="/userHome" exact component={userWelcome}/>" 
+		    					<Route path="/userHome" exact component={userWelcome}/> 
 		    					<Route path="/bookingHistory" exact component={bookingHistory}/>
 		    					<Route path="/bookTrain" exact component={bookTrain}/>
+		    					<Route path="/userChangePassword" exact component={userChangePassword}/>
 		    				</Switch>
 		    			</Col>
 		    		</Row>
