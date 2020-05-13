@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Card, Form, Col} from 'react-bootstrap';
-
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSave} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 export default class userChangePassword extends React.Component {
 	initialState = {
@@ -91,7 +92,9 @@ export default class userChangePassword extends React.Component {
 				</Form.Row>
 			</Card.Body>
 			<Card.Footer>
-				<Button type="submit">Change Password</Button>
+			<Button size="sm" variant="info" type="submit">
+		    	<FontAwesomeIcon icon={faSave}/> Change Password
+		    </Button>
 			</Card.Footer>
 			</Form>
 			</Card>
