@@ -56,12 +56,19 @@ public class RuleService {
         },
         "action": {
             "action_type": "update",
-            "query": "update train set remaining_seats=remaining_seats+10 where train_id=?",
+            "queries": [
+                {
+                    "query": "update train set remaining_seats=remaining_seats+10 where train_id=?"
+                },
+                {
+                    "query": "update train set remaining_seats=remaining_seats-10 where train_id=?"
+                }
+            ],
             "method_path": "none"
         },
         "rule_type": "deferred",
         "rule_status": "Active"
-    }
+        }
 	 * */
 	
 	public boolean ruleBaseMarshall(Rule rule) {
@@ -156,7 +163,7 @@ public class RuleService {
     		{
     			String event="";
     			String action="";
-    			String actiontype="";
+    			String actiontype=rule.getAction().getAction_type();
     			
     			event="Select *from "+rule.getTable()+" where ";
     			
@@ -172,25 +179,25 @@ public class RuleService {
     				count--;
     			}
     			
-    			// action query
-    			action=rule.getAction().getQuery();
-    			actiontype=rule.getAction().getAction_type();
-    			System.out.println(actiontype);
-    			if(actiontype.equals("method"))
-    			{
+    			if (actiontype.equals("method")) {
     				System.out.println("method");
     				action=rule.getAction().getMethod_path();
+    				try {
+        				ruleExecute(event,action,actiontype);
+        			}
+        			catch (Exception e) {
+    					// TODO: handle exception
+    				}
+    			} else {
+	    			for (Query query : rule.getAction().getQueries()) {
+	    				try {
+	        				ruleExecute(event,query.getQuery(),actiontype);
+	        			}
+	        			catch (Exception e) {
+	    					System.err.println("Error : "+e);
+	    				}
+	    			}
     			}
-    			
-    			System.out.println(event);
-    			System.out.println(action);
-    			
-    			try {
-    				ruleExecute(event,action,actiontype);
-    			}
-    			catch (Exception e) {
-					// TODO: handle exception
-				}
     		}
     	}
     	return 1;
