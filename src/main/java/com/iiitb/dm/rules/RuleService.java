@@ -144,7 +144,7 @@ public class RuleService {
     	ruleBaseMarshall(rule);
     }
     // function for forming the event, action queries for each rule
-    public void rulePreprocessing() {
+    public int rulePreprocessing() {
     	
     	// this list gives json object addresses on printing
     	List<Rule> rules=ruleBaseUnmarshall();
@@ -193,6 +193,7 @@ public class RuleService {
 				}
     		}
     	}
+    	return 1;
     }
     
     public void sendmail(String toMail,String context) throws MailException

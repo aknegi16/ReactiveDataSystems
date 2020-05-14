@@ -3,14 +3,14 @@
     <Rule>
         <Action>
             <action_type>update</action_type>
-            <query>update train set remaining_seats=remaining_seats+10 where train_id=?</query>
+            <query>update train set number_of_compartment = number_of_compartment+1, remaining_seats = remaining_seats+10 where id=?</query>
         </Action>
         <Event>
             <conditions>
                 <condition>
                     <attribute>remaining_seats</attribute>
                     <operator>&lt;=</operator>
-                    <value>15</value>
+                    <value>5</value>
                 </condition>
             </conditions>
             <event_type>select</event_type>
@@ -30,7 +30,7 @@
             <conditions>
                 <condition>
                     <attribute>CURRENT_DATE-date(pswd_last_changed)</attribute>
-                    <operator>>=</operator>
+                    <operator>=</operator>
                     <value>30</value>
                 </condition>
             </conditions>

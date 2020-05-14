@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iiitb.dm.train.Train;
-
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class RulesController {
@@ -26,9 +24,15 @@ public class RulesController {
 	public List<Rule> ruleBaseUnmarshall() {
 		System.out.println("Got here");
 		
-		// for now, calling runPreprocessing from here
-		ruleService.rulePreprocessing();
 		return ruleService.ruleBaseUnmarshall();
+	}
+	
+	@RequestMapping(value="/rules/execute")
+	public int ruleExecute() {
+		System.out.println("Rule execution started");
+		
+		// for now, calling runPreprocessing from here
+		return ruleService.rulePreprocessing();
 	}
 	
 	@RequestMapping(value="/rules/{ruleId}")

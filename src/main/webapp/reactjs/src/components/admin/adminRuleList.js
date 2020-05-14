@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faList, faEdit, faTrash, faSave} from '@fortawesome/free-solid-svg-icons';
 import MyToast from '../MyToast';
 
 export default class adminRuleList extends React.Component {
@@ -42,11 +42,19 @@ export default class adminRuleList extends React.Component {
 		});
 	}
 	
+	executeRule = () =>{
+		axios.get("http://localhost:8001/rest/rules/execute")
+		.then(response => {
+			this.setState({"show":true});
+			setTimeout(() => this.setState({"show":false}), 3000);
+			});
+	}
+	
 	render() {
 		return(
 			<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast show={this.state.show} message={"Rule deleted successfully"} type={"danger"}/>
+				<MyToast show={this.state.show} message={"Successfully done"} type={"success"}/>
 			</div>
 			<div>
 			<Card className={"border border-dark bg-dark text-white"}>
@@ -101,6 +109,9 @@ export default class adminRuleList extends React.Component {
 				  </tbody>
 				</Table>
 				</Card.Body>
+				<Card.Footer>
+				<Button size='sm' variant="success" onClick={this.executeRule.bind(this)}><FontAwesomeIcon icon={faSave}/>Execute Rules</Button>
+				</Card.Footer>
 			</Card>
 			</div>
 			</div>
