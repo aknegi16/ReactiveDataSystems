@@ -89,6 +89,7 @@ export default class Train extends React.Component {
 			const monthNames = ["January", "February", "March", "April", "May", "June",
 				  "July", "August", "September", "October", "November", "December"
 				];
+			const month = d.getMonth()+1;
 			const train = {
 					id: this.state.id,
 					trainId: this.state.trainId,
@@ -97,7 +98,7 @@ export default class Train extends React.Component {
 					bookedSeats: 0,
 					src :this.state.src,
 					dest :this.state.dest,
-					date : d.getFullYear()+"-"+monthNames[d.getMonth()]+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+					date : d.getFullYear()+"-"+month+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
 				}
 			axios.put("http://localhost:8001/rest/trains/"+train.id, train)
 			.then(response => {
@@ -214,7 +215,7 @@ export default class Train extends React.Component {
 				      		onChange={this.onDateChange}
 				            value={this.state.date}
 				      		className={"bg-white"}
-				      		format={"dd-MM-yyyy hh:mm a"}
+				      		format={"dd-MM-yyyy HH:mm"}
 				        />
 				   </Form.Group>
 			  	</Form.Row>
