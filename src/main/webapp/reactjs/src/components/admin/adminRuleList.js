@@ -93,7 +93,14 @@ export default class adminRuleList extends React.Component {
 						    	
 						    	)}</td>
 						    	<td>{
-						    		rule.action.action_type === 'method' ? <p>{rule.action.method_path}</p>:<p>{rule.action.query}</p> 
+						    		rule.action.action_type === 'method' ? <p>{rule.action.method_path}</p>:
+						    			<p>{
+								    		 rule.action.queries.map((c,i) =>
+								    		 <span key={i}>
+								             {c.query}<br/>
+								             </span>
+								    	
+								    	)}</p> 
 						    	}</td>
 						    	<td>{rule.rule_type}</td>
 						    	<td>{rule.rule_status}</td>

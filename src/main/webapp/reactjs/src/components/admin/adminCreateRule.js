@@ -19,7 +19,7 @@ export default class adminCreateRule extends React.Component {
 		},
 		action: {
 			action_type:'',
-			query:'',
+			queries: [],
 			method_path:''
 		},
 		rule_type:'',
@@ -34,6 +34,7 @@ export default class adminCreateRule extends React.Component {
 		this.ruleChange = this.ruleChange.bind(this);
 		this.submitRule = this.submitRule.bind(this);
 		this.addCondition = this.addCondition.bind(this);
+		this.addQuery = this.addQuery.bind(this);
 	}
 	componentDidMount() {
 		const ruleId =+this.props.match.params.id;
@@ -56,7 +57,7 @@ export default class adminCreateRule extends React.Component {
 					condition: response.data.event.conditions.condition,
 					action_type: response.data.action.action_type,
 					method_path: response.data.action.method_path,
-					query: response.data.action.query
+					queries: response.data.action.queries
 				});
 			}
 		});
@@ -79,12 +80,12 @@ export default class adminCreateRule extends React.Component {
 		};
 		
 		const action_type = this.state.action_type;
-		const query = this.state.query;
+		
 		const method_path = this.state.method_path;
 		
 		const action = {
 			action_type: action_type,
-			query: query,
+			queries: this.state.queries,
 			method_path: method_path
 		};
 		
@@ -104,9 +105,11 @@ export default class adminCreateRule extends React.Component {
 		axios.post("http://localhost:8001/rest/rules", rule)
 		.then(response => {
 			if (response.data) {
-				alert("Rule added into list");
+				this.setState({"show":true, "method":"post"});
+				setTimeout(() => this.setState({"show":false}), 3000);
+				setTimeout(() => this.ruleList(), 3000);
 			} else {
-				alert("False response");
+				this.setState({"show":false});	
 			}
 		});
 		this.setState(this.initialState);
@@ -116,7 +119,7 @@ export default class adminCreateRule extends React.Component {
 		event.preventDefault();
 		const action = {
 				action_type: this.state.action_type,
-				query: this.state.query,
+				query: this.state.queries,
 				method_path: this.state.method_path
 		}
 
@@ -169,11 +172,29 @@ export default class adminCreateRule extends React.Component {
 		}
 	};
 	
+	addQuery = () => {
+		if (this.queryTextInput.value.length > 0) {
+			const cond = {
+				query: this.queryTextInput.value
+			};
+			const list = this.state.action.queries;
+			list.push(cond);
+			this.setState({queries: list});
+		}
+	};
+	
 	deleteCondition = (index) => {
 		var condList = this.state.condition;
 		condList.splice(index, 1);
 	    this.setState({condition: condList});
 	};
+	
+	deleteQuery = (index) => {
+		var queryList = this.state.queries;
+		queryList.splice(index, 1);
+	    this.setState({queries: queryList});
+	};
+	
 	renderConditions = () => {
 		const list = this.state.condition || this.state.event.conditions.condition;
 		if (this.state.event.conditions.condition) {
@@ -222,7 +243,6 @@ export default class adminCreateRule extends React.Component {
 							onChange={this.ruleChange}
 							className={"bg-dark text-white"}>
 							    <option>Choose</option>
-							    <option>=</option>
 							    <option>==</option>
 							    <option>!=</option>
 							    <option>&lt;</option>
@@ -248,6 +268,53 @@ export default class adminCreateRule extends React.Component {
 					</Form.Row>
 					</div>
 					{conditions1}
+				</div>
+			);
+		}
+		return;
+	}
+	
+	renderQueries = () => {
+		const list = this.state.queries || this.state.action.queries;
+		if (this.state.action.queries) {
+			debugger;
+			const queries1 = list.map( (con, i) => (
+				<span key={i}>
+					<Form.Row>
+						<Form.Group as={Col}>
+							<Form.Label>Query</Form.Label><br/>
+							<Form.Label>{con.query}</Form.Label>
+						</Form.Group>
+						<span>
+							<Form.Label>Delete</Form.Label><br/>
+							<Button size="sm" variant="outline-danger" onClick ={this.deleteQuery.bind(this, i)} index={i}>
+								<FontAwesomeIcon icon={faTrash}/>
+							</Button>
+						</span>
+					</Form.Row>
+				</span>
+			));
+			return (
+				<div>
+					<div>
+						<Form.Row>
+						<Form.Group as={Col} controlId="query">
+					  		<Form.Label>Query</Form.Label>
+					  		<Form.Control autoComplete="off"
+								ref={(ref) => this.queryTextInput = ref}
+								type="text" name="query"
+								onChange={this.ruleChange}
+								placeholder="Enter value"
+								className={"bg-dark text-white"}/>
+					    </Form.Group>
+						<span>
+							<Form.Label>Add</Form.Label><br/>
+							<Button size="sm" variant="outline-info" className="btn btn-sm btn-outline-primary"
+							onClick={this.addQuery}> <FontAwesomeIcon icon={faPlusSquare}/></Button> {' '}
+						</span>
+						</Form.Row>
+					</div>
+					{queries1}
 				</div>
 			);
 		}
@@ -342,8 +409,7 @@ export default class adminCreateRule extends React.Component {
 				    	onChange={this.ruleChange}
 				    	className={"bg-dark text-white"}>
 				    <option>Choose</option>
-				    <option>insert</option>
-				    <option>update</option>
+				    <option>query</option>
 				    <option>method</option>
 				    </Form.Control>
 				</Form.Group>
@@ -361,17 +427,8 @@ export default class adminCreateRule extends React.Component {
 			    </Form.Group>
 				</Form.Row>
 				
-				<Form.Row>
-				<Form.Group as={Col} controlId="query">
-			  		<Form.Label>Query</Form.Label>
-				    <Form.Control autoComplete="off"
-				    	type="text" name="query"
-				    	value={query}
-				    	onChange={this.ruleChange}
-				    	placeholder="Enter query in SQL, if you selected action type as so"
-				    	className={"bg-dark text-white"}/>
-				</Form.Group>
-				</Form.Row>
+				{this.renderQueries()}
+				
 				<Form.Row>
 				<Form.Group as={Col} controlId="method_path">
 			  		<Form.Label>Method Path</Form.Label>
