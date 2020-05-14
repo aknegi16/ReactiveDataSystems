@@ -277,9 +277,18 @@ public class RuleService {
 	                                            throws SQLException {
 	                                        PreparedStatement stmt = con.prepareStatement(action);
 	                                        System.out.println(stmt);
+	                                        
+	                                        String parse=action.replace(", ", "");
+	                                        System.out.println(parse);
 	                                        // setting the ? as ordinal parameters
-	                                        for(int j=1;j<=actionMetaData.getColumnCount();j++)
-	                                                stmt.setString(j, eventResultSet.getString(actionMetaData.getColumnLabel(j)));
+	                                        for(int j=1,k=1;j<=actionMetaData.getColumnCount();j++)
+	                                        {
+	                                        	if((parse.split(",")[j-1]).contains("?"))
+	                                        	{
+	                                                stmt.setString(k, eventResultSet.getString(actionMetaData.getColumnLabel(j)));
+	                                                k++;
+	                                        	}
+	                                        }
 	                                        System.out.println(stmt);
 	                                        return stmt;
 	                                    }
