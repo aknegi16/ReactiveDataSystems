@@ -9,7 +9,7 @@ import MyToast from '../MyToast';
 
 export default class Train extends React.Component {
 	
-	initialState = {trainId:'',trainName:'',numberOfCompartments:'',bookedSeats:'',remainingSeats:'', date:new Date(),src:'',dest:''};;
+	initialState = {trainId:'',trainName:'',numberOfCompartments:'',bookedSeats:'',remainingSeats:'', date:'' ,src:'',dest:''};;
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
@@ -35,7 +35,7 @@ export default class Train extends React.Component {
 					bookedSeats :response.data.bookedSeats,
 					remainingSeats:response.data.remainingSeats,
 					src :response.data.src,
-					date :response.data.date,
+					date :new Date(response.data.date),
 					dest :response.data.dest,
 				});
 			}
@@ -81,6 +81,9 @@ export default class Train extends React.Component {
 			alert("Atleast keep 1 bogie");
 		} else {
 			const d = this.state.date;
+			const monthNames = ["January", "February", "March", "April", "May", "June",
+				  "July", "August", "September", "October", "November", "December"
+				];
 			const train = {
 					trainId: this.state.trainId,
 					trainName:this.state.trainName,
@@ -88,7 +91,7 @@ export default class Train extends React.Component {
 					bookedSeats: 0,
 					src :this.state.src,
 					dest :this.state.dest,
-					date : d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+					date : d.getFullYear()+"-"+monthNames[d.getMonth()]+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
 				}
 			axios.put("http://localhost:8001/rest/trains/"+train.trainId, train)
 			.then(response => {
@@ -157,6 +160,7 @@ export default class Train extends React.Component {
 				  		<Form.Control autoComplete="off" as="select"
 							type="text" name="src" required
 							onChange={this.trainChange}
+				  			value={src}
 							className={"bg-dark text-white"}>
 							    <option>Choose</option>
 							    <option>Bengaluru</option>
@@ -172,6 +176,7 @@ export default class Train extends React.Component {
 				      	<Form.Label>Destination</Form.Label>
 				      	<Form.Control autoComplete="off" as="select"
 							type="text" name="dest" required
+							value={dest}
 							onChange={this.trainChange}
 							className={"bg-dark text-white"}>
 							    <option>Choose</option>
