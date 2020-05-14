@@ -29,6 +29,7 @@ export default class Train extends React.Component {
 		.then(response => {
 			if (response.data != null) {
 				this.setState({
+					id: response.data.id,
 					trainId: response.data.trainId,
 					trainName: response.data.trainName,
 					numberOfCompartment: response.data.numberOfCompartment,
@@ -44,41 +45,11 @@ export default class Train extends React.Component {
 		});
 	};
 	
-	updateTrain(event) {
+	submitTrain(event) {
 		//alert('Train Name: '+this.state.trainName+'\nNumber of Bogies: '+this.state.numberOfBogies+'\nSeats remaining: '+this.state.remainingSeats+'\nTrain on time?: '+this.state.onTime);
 		event.preventDefault();
 		if (this.state.src == this.state.dest) {
 			alert("Source and destination cant be same");
-		} else {
-			const train = {
-				trainId: this.state.trainId,
-				trainName:this.state.trainName,
-				numberOfCompartment: this.state.numberOfCompartment,
-				bookedSeats:this.state.bookedSeats,
-				src :this.state.src,
-				date :this.state.date,
-				dest :this.state.dest
-			}
-			
-			axios.post("http://localhost:8001/rest/trains/", train)
-			.then(response => {
-				if (response.data != null) {
-					this.setState({"show":true, "method":"post"});
-					setTimeout(() => this.setState({"show":false}), 3000);
-				} else {
-					this.setState({"show":false});	
-				}
-			});
-			this.setState(this.initialState);
-		}
-	};
-	
-	submitTrain = event => {
-		event.preventDefault();
-		if (this.state.src == this.state.dest) {
-			alert("Source and destination cant be same");
-		} else if (this.state.numberOfCompartment < 1) {
-			alert("Atleast keep 1 bogie");
 		} else {
 			const d = this.state.date;
 			const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -93,7 +64,42 @@ export default class Train extends React.Component {
 					dest :this.state.dest,
 					date : d.getFullYear()+"-"+monthNames[d.getMonth()]+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
 				}
-			axios.put("http://localhost:8001/rest/trains/"+train.trainId, train)
+			
+			axios.post("http://localhost:8001/rest/trains/", train)
+			.then(response => {
+				if (response.data != null) {
+					this.setState({"show":true, "method":"post"});
+					setTimeout(() => this.setState({"show":false}), 3000);
+				} else {
+					this.setState({"show":false});	
+				}
+			});
+			this.setState(this.initialState);
+		}
+	};
+	
+	updateTrain = event => {
+		event.preventDefault();
+		if (this.state.src == this.state.dest) {
+			alert("Source and destination cant be same");
+		} else if (this.state.numberOfCompartment < 1) {
+			alert("Atleast keep 1 bogie");
+		} else {
+			const d = this.state.date;
+			const monthNames = ["January", "February", "March", "April", "May", "June",
+				  "July", "August", "September", "October", "November", "December"
+				];
+			const train = {
+					id: this.state.id,
+					trainId: this.state.trainId,
+					trainName:this.state.trainName,
+					numberOfCompartment: this.state.numberOfCompartment,
+					bookedSeats: 0,
+					src :this.state.src,
+					dest :this.state.dest,
+					date : d.getFullYear()+"-"+monthNames[d.getMonth()]+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+				}
+			axios.put("http://localhost:8001/rest/trains/"+train.id, train)
 			.then(response => {
 				if (response.data != null) {
 					this.setState({"show":true, "method":"put"});
@@ -127,12 +133,13 @@ export default class Train extends React.Component {
 		return(
 		<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast show={this.state.show} message="Train saved successfully" type={"success"}/>
+			<MyToast show={this.state.show} message={this.state.method === "put" ? "Train updated successfully": "Train saved successfully"} type={"success"}/>
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header><FontAwesomeIcon icon={faEdit}/> Train Details</Card.Header>
+			<Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare}/> {this.state.id ? "Update Train" : "Add new Train"}</Card.Header>
+
 			
-			<Form id="trainFormId" onReset={this.resetTrain} onSubmit={this.submitTrain}>
+			<Form id="trainFormId" onReset={this.resetTrain} onSubmit={this.state.id ? this.updateTrain : this.submitTrain}>
 			<Card.Body>
 				<Form.Row>
 			  	   <Form.Group as={Col} controlId="formGridTrainId">
@@ -214,7 +221,7 @@ export default class Train extends React.Component {
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
 			 <Button size="sm" variant="success" type="submit">
-			    <FontAwesomeIcon icon={faSave}/> Save
+			 <FontAwesomeIcon icon={faSave}/> {this.state.id ? "Update" : "Save"}
 			  </Button>
 			    {' '}
 			    <Button size="sm" variant="info" type="reset">

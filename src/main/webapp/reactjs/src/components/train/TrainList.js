@@ -35,7 +35,7 @@ export default class TrainList extends React.Component {
 				this.setState({"show":true});
 				setTimeout(() => this.setState({"show":false}), 3000);
 				this.setState({
-					trains: this.state.trains.filter(train => train.trainId !== trainId)
+					trains: this.state.trains.filter(train => train.id !== trainId)
 				});
 			} else {
 				this.setState({"show":false});	
@@ -83,8 +83,8 @@ export default class TrainList extends React.Component {
 						    	<td>{train.date}</td>
 						    	<td>
 						    		<ButtonGroup>
-						    			<Link to={"edit/"+train.trainId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
-						    			<Button size='sm' variant="outline-danger" onClick={this.deleteTrain.bind(this, train.trainId)}><FontAwesomeIcon icon={faTrash}/></Button>
+						    			<Link to={"edit/"+train.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
+						    			<Button size='sm' variant="outline-danger" onClick={this.deleteTrain.bind(this, train.id)}><FontAwesomeIcon icon={faTrash}/></Button>
 						    		</ButtonGroup>
 						    	</td>
 						    </tr> 
