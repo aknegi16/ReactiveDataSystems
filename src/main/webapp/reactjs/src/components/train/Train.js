@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import DateTimePicker from 'react-datetime-picker';
 import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +9,7 @@ import MyToast from '../MyToast';
 
 export default class Train extends React.Component {
 	
-	initialState = {trainId:'',trainName:'',numberOfCompartments:'',bookedSeats:'',remainingSeats:'', date:'',src:'',dest:''};;
+	initialState = {trainId:'',trainName:'',numberOfCompartments:'',bookedSeats:'',remainingSeats:'', date:new Date(),src:'',dest:''};;
 	constructor(props) {
 		super(props);
 		this.state = this.initialState;
@@ -47,32 +47,10 @@ export default class Train extends React.Component {
 	submitTrain(event) {
 		//alert('Train Name: '+this.state.trainName+'\nNumber of Bogies: '+this.state.numberOfBogies+'\nSeats remaining: '+this.state.remainingSeats+'\nTrain on time?: '+this.state.onTime);
 		event.preventDefault();
-		
-		const train = {
-			trainId: this.state.trainId,
-			trainName:this.state.trainName,
-			numberOfCompartment: this.state.numberOfCompartment,
-			bookedSeats:this.state.bookedSeats,
-			src :this.state.src,
-			date :this.state.date,
-			dest :this.state.dest
-		}
-		
-		axios.post("http://localhost:8001/rest/trains/", train)
-		.then(response => {
-			if (response.data != null) {
-				this.setState({"show":true, "method":"post"});
-				setTimeout(() => this.setState({"show":false}), 3000);
-			} else {
-				this.setState({"show":false});	
-			}
-		});
-		this.setState(this.initialState);
-	};
-	
-	updateTrain = event => {
-		event.preventDefault();
-		const train = {
+		if (this.state.src == this.state.dest) {
+			alert("Source and destination cant be same");
+		} else {
+			const train = {
 				trainId: this.state.trainId,
 				trainName:this.state.trainName,
 				numberOfCompartment: this.state.numberOfCompartment,
@@ -81,17 +59,49 @@ export default class Train extends React.Component {
 				date :this.state.date,
 				dest :this.state.dest
 			}
-		axios.put("http://localhost:8001/rest/trains/"+train.trainId, train)
-		.then(response => {
-			if (response.data != null) {
-				this.setState({"show":true, "method":"put"});
-				setTimeout(() => this.setState({"show":false}), 3000);
-				setTimeout(() => this.trainList(), 3000);
-			} else {
-				this.setState({"show":false});	
-			}
-		});
-		this.setState(this.initialState);
+			
+			axios.post("http://localhost:8001/rest/trains/", train)
+			.then(response => {
+				if (response.data != null) {
+					this.setState({"show":true, "method":"post"});
+					setTimeout(() => this.setState({"show":false}), 3000);
+				} else {
+					this.setState({"show":false});	
+				}
+			});
+			this.setState(this.initialState);
+		}
+	};
+	
+	updateTrain = event => {
+		event.preventDefault();
+		if (this.state.src == this.state.dest) {
+			alert("Source and destination cant be same");
+		} else if (this.state.numberOfCompartment < 1) {
+			alert("Atleast keep 1 bogie");
+		} else {
+			const d = this.state.date;
+			const train = {
+					trainId: this.state.trainId,
+					trainName:this.state.trainName,
+					numberOfCompartment: this.state.numberOfCompartment,
+					bookedSeats: 0,
+					src :this.state.src,
+					dest :this.state.dest,
+					date : d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+				}
+			axios.put("http://localhost:8001/rest/trains/"+train.trainId, train)
+			.then(response => {
+				if (response.data != null) {
+					this.setState({"show":true, "method":"put"});
+					setTimeout(() => this.setState({"show":false}), 3000);
+					setTimeout(() => this.trainList(), 3000);
+				} else {
+					this.setState({"show":false});	
+				}
+			});
+			this.setState(this.initialState);
+		}
 	};
 	
 	resetTrain = () => {
@@ -107,6 +117,7 @@ export default class Train extends React.Component {
 	trainList = () => {
 		return this.props.history.push("/list");
 	};
+	onDateChange = date => this.setState({ date })
 	render() {
 		const {trainId,trainName,numberOfCompartment,bookedSeats,remainingSeats,src,date,dest} = this.state;
 		
@@ -125,73 +136,74 @@ export default class Train extends React.Component {
 				  		<Form.Label>Train Id</Form.Label>
 					    <Form.Control required autoComplete="off"
 					    	type="text" name="trainId"
-					    	value={trainId}
+					    	value={trainId} autofocus
 					    	onChange={this.trainChange}
 					    	placeholder="Enter train ID" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
+			      <Form.Group as={Col} controlId="formGridTrainName">
+			  		  <Form.Label>Train Name</Form.Label>
+				      <Form.Control required autoComplete="off"
+				    	  type="text" name="trainName"
+				    	  value={trainName}
+					      onChange={this.trainChange}
+					      placeholder="Enter train name" 
+					      className={"bg-dark text-white"}/>
+			    </Form.Group>
 				</Form.Row>
-			  	<Form.Row>
-			  	   <Form.Group as={Col} controlId="formGridTrainName">
-				  		<Form.Label>Train Name</Form.Label>
-					    <Form.Control required autoComplete="off"
-					    	type="text" name="trainName"
-					    	value={trainName}
-					    	onChange={this.trainChange}
-					    	placeholder="Enter train name" 
-					    	className={"bg-dark text-white"}/>
+				<Form.Row>
+			  	   <Form.Group as={Col} controlId="formGridsrc">
+				  		<Form.Label>Source</Form.Label>
+				  		<Form.Control autoComplete="off" as="select"
+							type="text" name="src" required
+							onChange={this.trainChange}
+							className={"bg-dark text-white"}>
+							    <option>Choose</option>
+							    <option>Bengaluru</option>
+							    <option>Hyderabad</option>
+							    <option>Mumbai</option>
+							    <option>Raipur</option>
+							    <option>Delhi</option>
+							    <option>Chennai</option>
+							    <option>Pune</option>
+							</Form.Control>
 				  </Form.Group>
+				  <Form.Group as={Col} controlId="formGriddest">
+				      	<Form.Label>Destination</Form.Label>
+				      	<Form.Control autoComplete="off" as="select"
+							type="text" name="dest" required
+							onChange={this.trainChange}
+							className={"bg-dark text-white"}>
+							    <option>Choose</option>
+							    <option>Bengaluru</option>
+							    <option>Hyderabad</option>
+							    <option>Mumbai</option>
+							    <option>Raipur</option>
+							    <option>Delhi</option>
+							    <option>Chennai</option>
+							    <option>Pune</option>
+							</Form.Control>
+				   </Form.Group>
+			  	</Form.Row>
+			  	<Form.Row>
+		
 				  <Form.Group as={Col} controlId="formGridNumberOfCompartment">
 				      	<Form.Label>Number of Compartment</Form.Label>
 				      <Form.Control required autoComplete="off"
-				      	type="text" name="numberOfCompartment"
+				      	type="number" name="numberOfCompartment"
 				      	value={numberOfCompartment}
 				    	onChange={this.trainChange}
 				      	placeholder="Enter number of Compartments"
 				      	className={"bg-dark text-white"}/>
 				   </Form.Group>
-			  	</Form.Row>
-				<Form.Row>
-			  	   <Form.Group as={Col} controlId="formGridsrc">
-				  		<Form.Label>Src</Form.Label>
-					    <Form.Control required autoComplete="off"
-					    	type="text" name="src"
-					    	value={src}
-					    	onChange={this.trainChange}
-					    	placeholder="Enter src" 
-					    	className={"bg-dark text-white"}/>
-				  </Form.Group>
-				  <Form.Group as={Col} controlId="formGriddest">
-				      	<Form.Label>Dest</Form.Label>
-				      <Form.Control required autoComplete="off"
-				      	type="text" name="dest"
-				      	value={dest}
-				    	onChange={this.trainChange}
-				      	placeholder="Enter dest"
-				      	className={"bg-dark text-white"}/>
-				   </Form.Group>
-			  	</Form.Row>
-			  	
-			  	
-			  	<Form.Row>
-			  	   <Form.Group as={Col} controlId="formGridbookedSeats">
-				  		<Form.Label>Booked Seats</Form.Label>
-					    <Form.Control required autoComplete="off"
-					    	type="text" name="bookedSeats"
-					    	value={bookedSeats}
-					    	onChange={this.trainChange}
-					    	placeholder="Enter Booked Seats" 
-					    	className={"bg-dark text-white"}/>
-				  </Form.Group>
-			  	   
 				  <Form.Group as={Col} controlId="formGriddate">
-				      	<Form.Label>Date & Time (dd.mm.yyyy hh:mm:ss)</Form.Label>
-				      <Form.Control required autoComplete="off"
-				      	type="text" name="date"
-				      	value={date}
-				    	onChange={this.trainChange}
-				      	placeholder="Enter date and time"
-				      	className={"bg-dark text-white"}/>
+				      	<Form.Label>Date & Time</Form.Label><br/>
+				      	<DateTimePicker name="date" minDate={new Date()}
+				      		onChange={this.onDateChange}
+				            value={this.state.date}
+				      		className={"bg-white"}
+				      		format={"dd-MM-yyyy hh:mm a"}
+				        />
 				   </Form.Group>
 			  	</Form.Row>
 			</Card.Body>
