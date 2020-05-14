@@ -44,7 +44,7 @@ export default class Train extends React.Component {
 		});
 	};
 	
-	submitTrain(event) {
+	updateTrain(event) {
 		//alert('Train Name: '+this.state.trainName+'\nNumber of Bogies: '+this.state.numberOfBogies+'\nSeats remaining: '+this.state.remainingSeats+'\nTrain on time?: '+this.state.onTime);
 		event.preventDefault();
 		if (this.state.src == this.state.dest) {
@@ -73,7 +73,7 @@ export default class Train extends React.Component {
 		}
 	};
 	
-	updateTrain = event => {
+	submitTrain = event => {
 		event.preventDefault();
 		if (this.state.src == this.state.dest) {
 			alert("Source and destination cant be same");
@@ -127,12 +127,12 @@ export default class Train extends React.Component {
 		return(
 		<div>
 			<div style={{"display":this.state.show ? "block" : "none"}}>
-				<MyToast show={this.state.show} message={this.state.method === "put" ? "Train updated successfully": "Train saved successfully"} type={"success"}/>
+				<MyToast show={this.state.show} message="Train saved successfully" type={"success"}/>
 			</div>
 			<Card className={"border border-dark bg-dark text-white"}>
-			<Card.Header><FontAwesomeIcon icon={this.state.trainId ? faEdit : faPlusSquare}/> {this.state.trainId ? "Update Train" : "Add new Train"}</Card.Header>
+			<Card.Header><FontAwesomeIcon icon={faEdit}/> Train Details</Card.Header>
 			
-			<Form id="trainFormId" onReset={this.resetTrain} onSubmit={this.state.trainId ? this.updateTrain : this.submitTrain}>
+			<Form id="trainFormId" onReset={this.resetTrain} onSubmit={this.submitTrain}>
 			<Card.Body>
 				<Form.Row>
 			  	   <Form.Group as={Col} controlId="formGridTrainId">
@@ -214,7 +214,7 @@ export default class Train extends React.Component {
 			</Card.Body>
 			<Card.Footer style={{"textAlign":"right"}}>
 			 <Button size="sm" variant="success" type="submit">
-			    <FontAwesomeIcon icon={faSave}/> {this.state.trainId ? "Update" : "Save"}
+			    <FontAwesomeIcon icon={faSave}/> Save
 			  </Button>
 			    {' '}
 			    <Button size="sm" variant="info" type="reset">
