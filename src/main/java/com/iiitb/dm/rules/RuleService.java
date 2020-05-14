@@ -225,10 +225,10 @@ public class RuleService {
 	    	msgMailMessage.setSubject(subjectString);
 	    	msgMailMessage.setText(textString);
 	    	
-	    	System.out.println("2");
+	    	System.out.println("Prepared mail");
 	        
 	    	javaMailSender.send(msgMailMessage);
-	        System.out.println("Done");
+	        System.out.println("Done mailing");
     	}
     	catch(Exception e) {
     		System.out.println(e.toString());
@@ -239,11 +239,13 @@ public class RuleService {
     {
     	
     	String actionSelectString="";
-    	
-    	if(actiontype.equals("insert"))
-    		actionSelectString="Select * from "+(action.split(" "))[2]+"";
-    	else if(actiontype.equals("update"))
-    		actionSelectString="Select * from "+(action.split(" "))[1]+"";
+    	if(actiontype.equals("query"))
+    	{
+	    	if(action.contains("insert")||action.contains("delete"))
+	    		actionSelectString="Select * from "+(action.split(" "))[2]+"";
+	    	else if(action.contains("update"))
+	    		actionSelectString="Select * from "+(action.split(" "))[1]+"";
+    	}
     	else if(actiontype.equals("method"))
     		actionSelectString=event;
 		
@@ -264,7 +266,7 @@ public class RuleService {
                 	public ResultSet extractData(ResultSet eventResultSet) throws SQLException, DataAccessException {
                 		
                 		// for insert action
-                		if(actiontype.equals("insert"))
+                		if(action.contains("insert"))
                 		{	// for each row of result set
 	                		while(eventResultSet.next())
 	                		{
@@ -274,10 +276,11 @@ public class RuleService {
 	                                    public PreparedStatement createPreparedStatement(Connection con)
 	                                            throws SQLException {
 	                                        PreparedStatement stmt = con.prepareStatement(action);
-	                                        //System.out.println(stmt);
+	                                        System.out.println(stmt);
 	                                        // setting the ? as ordinal parameters
 	                                        for(int j=1;j<=actionMetaData.getColumnCount();j++)
 	                                                stmt.setString(j, eventResultSet.getString(actionMetaData.getColumnLabel(j)));
+	                                        System.out.println(stmt);
 	                                        return stmt;
 	                                    }
 	                                });
@@ -287,9 +290,8 @@ public class RuleService {
 	                                }
 	                		}
                 		}
-                		else if(actiontype.equals("update"))
+                		else if(action.contains("update")||action.contains("delete"))
                 		{
-                			System.out.println("update");
                 			while(eventResultSet.next())
 	                		{
 	                			try {
@@ -298,8 +300,12 @@ public class RuleService {
 	                                    public PreparedStatement createPreparedStatement(Connection con)
 	                                            throws SQLException {
 	                                        PreparedStatement stmt = con.prepareStatement(action);
-	                                        //System.out.println(stmt);
+	                                        
+	                                        System.out.println(stmt);
+	                                        
 	                                        stmt.setInt(1, eventResultSet.getInt(actionMetaData.getColumnLabel(1)));
+	                                        
+	                                        System.out.println(stmt);
 	                                        return stmt;
 	                                    }
 	                                });

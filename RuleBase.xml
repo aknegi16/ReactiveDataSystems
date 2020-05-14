@@ -2,7 +2,11 @@
 <RuleBase>
     <Rule>
         <Action>
-            <action_type>update</action_type>
+            <action_type>query</action_type>
+            <method_path>none</method_path>
+            <queries>
+                <query>update train set number_of_compartment = number_of_compartment+1, remaining_seats = remaining_seats+10 where id=?</query>
+            </queries>          
         </Action>
         <Event>
             <conditions>
@@ -11,13 +15,40 @@
                     <operator>&lt;=</operator>
                     <value>5</value>
                 </condition>
+                <conjunction>none</conjunction>
             </conditions>
             <event_type>select</event_type>
         </Event>
-        <ruleId>1</ruleId>
+        <ruleId>0</ruleId>
         <rule_description>Adding extra compartments (seats) on demand</rule_description>
         <rule_status>Active</rule_status>
-        <rule_type>defered</rule_type>
+        <rule_type>deferred</rule_type>
+        <table>train</table>
+    </Rule>
+    <Rule>
+        <Action>
+            <action_type>query</action_type>
+            <queries>
+                <query>insert into train_history values(?,?,?,?,?,?,?,?,?)</query>
+            </queries>
+            <queries>
+                <query>delete from train where id=?</query>
+            </queries>  
+        </Action>
+        <Event>
+            <conditions>
+                <condition>
+                    <attribute>date(date)</attribute>
+                    <operator>&lt;</operator>
+                    <value>CURRENT_DATE</value>
+                </condition>
+            </conditions>
+            <event_type>select</event_type>
+        </Event>
+        <ruleId>2</ruleId>
+        <rule_description>Moving previous trains to train history table</rule_description>
+        <rule_status>Active</rule_status>
+        <rule_type>deferred</rule_type>
         <table>train</table>
     </Rule>
     <Rule>
@@ -29,66 +60,17 @@
             <conditions>
                 <condition>
                     <attribute>CURRENT_DATE-date(pswd_last_changed)</attribute>
-                    <operator>=</operator>
+                    <operator>&gt;=</operator>
                     <value>30</value>
                 </condition>
+                <conjunction>none</conjunction>
             </conditions>
             <event_type>select</event_type>
         </Event>
-        <ruleId>27706</ruleId>
-        <rule_description>send mail</rule_description>
+        <ruleId>1</ruleId>
+        <rule_description>send mail for password change</rule_description>
         <rule_status>Active</rule_status>
-        <rule_type>defered</rule_type>
+        <rule_type>deferred</rule_type>
         <table>user</table>
-    </Rule>
-    <Rule>
-        <Action>
-            <action_type>update</action_type>
-            <method_path>none</method_path>
-        </Action>
-        <Event>
-            <conditions>
-                <condition>
-                    <attribute>remaining_seats</attribute>
-                    <operator>&lt;=</operator>
-                    <value>5</value>
-                </condition>
-                <conjunction>none</conjunction>
-            </conditions>
-            <event_type>select</event_type>
-        </Event>
-        <ruleId>0</ruleId>
-        <rule_description>Adding extra compartments (seats) on demand</rule_description>
-        <rule_status>Active</rule_status>
-        <rule_type>deferred</rule_type>
-        <table>train</table>
-    </Rule>
-    <Rule>
-        <Action>
-            <action_type>update</action_type>
-            <method_path>none</method_path>
-            <queries>
-                <query>update train set remaining_seats=remaining_seats+10 where train_id=?</query>
-            </queries>
-            <queries>
-                <query>update train set remaining_seats=remaining_seats-10 where train_id=?</query>
-            </queries>
-        </Action>
-        <Event>
-            <conditions>
-                <condition>
-                    <attribute>remaining_seats</attribute>
-                    <operator>&lt;=</operator>
-                    <value>5</value>
-                </condition>
-                <conjunction>none</conjunction>
-            </conditions>
-            <event_type>select</event_type>
-        </Event>
-        <ruleId>0</ruleId>
-        <rule_description>Adding extra compartments (seats) on demand</rule_description>
-        <rule_status>Active</rule_status>
-        <rule_type>deferred</rule_type>
-        <table>train</table>
     </Rule>
 </RuleBase>
