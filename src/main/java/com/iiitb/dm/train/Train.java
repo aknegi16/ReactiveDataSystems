@@ -3,13 +3,18 @@ package com.iiitb.dm.train;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
 
 @Entity
 public class Train {
-	@Id
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
 	private String trainId;
 	private String trainName;
 	private String numberOfCompartment;
@@ -20,7 +25,6 @@ public class Train {
 	private String dest;
 	
 	public Train() {}
-	
 	
 	public Train(String trainId, String trainName, String numberOfCompartment, String bookedSeats,String src,
 			String dest, String date) {
@@ -35,6 +39,13 @@ public class Train {
 		this.date=date;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getTrainId() {
 		return trainId;

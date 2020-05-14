@@ -50,11 +50,28 @@ export default class bookTicket extends React.Component {
 						date : response.data.date,
 						pnr : Math.floor(Math.random() * 10000000000)+1
 					}
+				const train=response.data;
+				
+				// checking if reserved seats are less than remaining seats
+				if(parseInt(train.remainingSeats)<parseInt(this.state.seatsReserved))
+					return alert("choose seats less than remaining seats"+train.remainingSeats);
+				
+				// decrementing the reserved seats from train
+				train.bookedSeats=(parseInt(train.bookedSeats)+parseInt(this.state.seatsReserved)).toString();
+				
+				console.log(train.bookedSeats);
 				axios.post("http://localhost:8001/rest/bookingDetails", bookTrain)
 				.then( response => {
+					axios.put("http://localhost:8001/rest/trains/"+train.id, train)
+					.then(response => {
+						if (response.data != null) {
+							console.log("changed train");
+						}
+					});
 					alert("Booked seats successfully");
 					setTimeout(() => this.bookingHistory(), 3000);
 				});
+				
 			}).catch(error => {
 				console.log("Couldn't fetch trains :"+error);
 			});
@@ -115,7 +132,7 @@ export default class bookTicket extends React.Component {
 						    	</td>
 						    	<td>
 						    		<ButtonGroup>
-						    			<Button size='sm' variant="outline-info" onClick={this.bookTrainTicket.bind(this, train.trainId)}>
+						    			<Button size='sm' variant="outline-info" onClick={this.bookTrainTicket.bind(this, train.id)}>
 						    			<FontAwesomeIcon icon={faSave}/></Button>
 						    		</ButtonGroup>
 						    	</td>

@@ -17,7 +17,7 @@ public class TrainService {
 		return trains;
 	}
 	
-	public Train getTrain(String id) {
+	public Train getTrain(int id) {
 		return trainRepository.findById(id).get();
 	}
 	
@@ -26,12 +26,12 @@ public class TrainService {
 		trainRepository.save(train);
 	}
 	
-	public void updateTrain(Train train, String id){
+	public void updateTrain(Train train, int id){
 		train.setRemainingSeats(Integer.toString(Integer.parseInt(train.getNumberOfCompartment())*10-Integer.parseInt(train.getBookedSeats())));
 		trainRepository.save(train);
 	}
 	
-	public void deleteTrain(String id) {
+	public void deleteTrain(int id) {
 		trainRepository.deleteById(id);
 	}
 

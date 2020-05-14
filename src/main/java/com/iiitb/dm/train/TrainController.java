@@ -22,7 +22,7 @@ public class TrainController {
 	}
 	
 	@RequestMapping("/trains/{id}")
-	public Train getTrain(@PathVariable String id) {
+	public Train getTrain(@PathVariable int id) {
 		return trainService.getTrain(id);
 	}
 	
@@ -46,12 +46,12 @@ public class TrainController {
 	
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/trains/{id}")
-	public void updateTrain(@RequestBody Train train, @PathVariable String id) {
+	public void updateTrain(@RequestBody Train train, @PathVariable int id) {
 		trainService.updateTrain(train, id);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/trains/{trainId}")
-	public void deleteTrains(@PathVariable String trainId) {
+	public void deleteTrains(@PathVariable int trainId) {
 		trainService.deleteTrain(trainId);
 	}
 }
