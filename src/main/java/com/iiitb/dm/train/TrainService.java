@@ -22,10 +22,12 @@ public class TrainService {
 	}
 	
 	public void addTrain(Train train) {
+		train.setRemainingSeats(Integer.toString(Integer.parseInt(train.getNumberOfCompartment())*10-Integer.parseInt(train.getBookedSeats())));
 		trainRepository.save(train);
 	}
 	
-	public void updateTrain(Train train, String id) {
+	public void updateTrain(Train train, String id){
+		train.setRemainingSeats(Integer.toString(Integer.parseInt(train.getNumberOfCompartment())*10-Integer.parseInt(train.getBookedSeats())));
 		trainRepository.save(train);
 	}
 	

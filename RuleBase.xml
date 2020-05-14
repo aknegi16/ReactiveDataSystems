@@ -24,14 +24,14 @@
     <Rule>
         <Action>
             <action_type>method</action_type>
-            <method_path>sendmail</method_path>
+            <method_path>sendmail pwdchange</method_path>
         </Action>
         <Event>
             <conditions>
                 <condition>
-                    <attribute>sex</attribute>
-                    <operator>=</operator>
-                    <value>"F"</value>
+                    <attribute>CURRENT_DATE-date(pswd_last_changed)</attribute>
+                    <operator>>=</operator>
+                    <value>30</value>
                 </condition>
             </conditions>
             <event_type>select</event_type>
@@ -40,6 +40,6 @@
         <rule_description>send mail</rule_description>
         <rule_status>Active</rule_status>
         <rule_type>defered</rule_type>
-        <table>admin</table>
+        <table>user</table>
     </Rule>
 </RuleBase>

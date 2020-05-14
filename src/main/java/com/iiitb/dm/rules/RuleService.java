@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.Subject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -194,18 +195,27 @@ public class RuleService {
     	}
     }
     
-    public void sendmail(String toMail) throws MailException
+    public void sendmail(String toMail,String context) throws MailException
     {
     	System.out.println("Begin mail");
     	System.out.println(toMail);
+    	String subjectString="";
+    	String textString="";
     
     	try {
     	
 	    	SimpleMailMessage msgMailMessage=new SimpleMailMessage();
 	    	
 	    	msgMailMessage.setTo(toMail);
-	    	msgMailMessage.setSubject("From spring boot");
-	    	msgMailMessage.setText("Hey");
+	    	if(context.equals("pwdchange"))
+	    	{
+	    		subjectString="Password change required";
+	    		textString="Please change your password. It has been 30 days since you last changed it";
+	    	}
+	    	System.out.println(subjectString);
+	    	
+	    	msgMailMessage.setSubject(subjectString);
+	    	msgMailMessage.setText(textString);
 	    	
 	    	System.out.println("2");
 	        
@@ -297,11 +307,11 @@ public class RuleService {
                 			RuleService cls = new RuleService();
                 	        Class c = cls.getClass();
                 	        
-                	        if(action.equals("sendmail"))
+                	        if(action.contains("sendmail"))
                 	        {
                 	        	while(eventResultSet.next())
     	                		{
-                	        		sendmail(eventResultSet.getString("mail"));
+                	        		sendmail(eventResultSet.getString("mail"),(action.split(" "))[1]);
     	                		}
                 	        }
                 	        else {

@@ -1,6 +1,9 @@
 package com.iiitb.dm.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,24 @@ public class UserService {
 	}
 	
 	public void addUser(User u) {
+		long miliSec=Long.parseLong(u.getPswdLastChanged());
+		DateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  
+        // Creating date from milliseconds 
+        // using Date() constructor 
+        Date result = new Date(miliSec);
+        u.setPswdLastChanged(simple.format(result));
 		userRepository.save(u);
 	}
 	
 	public void updateUser(User u, String id) {
+		long miliSec=Long.parseLong(u.getPswdLastChanged());
+		DateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  
+        // Creating date from milliseconds 
+        // using Date() constructor 
+        Date result = new Date(miliSec);
+        u.setPswdLastChanged(simple.format(result));
 		userRepository.save(u);
 	}
 	

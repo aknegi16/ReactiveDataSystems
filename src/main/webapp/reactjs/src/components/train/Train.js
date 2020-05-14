@@ -37,8 +37,6 @@ export default class Train extends React.Component {
 					src :response.data.src,
 					date :response.data.date,
 					dest :response.data.dest,
-			
-					
 				});
 			}
 		}).catch((error) => {
@@ -55,7 +53,6 @@ export default class Train extends React.Component {
 			trainName:this.state.trainName,
 			numberOfCompartment: this.state.numberOfCompartment,
 			bookedSeats:this.state.bookedSeats,
-			remainingSeats:this.state.remainingSeats,
 			src :this.state.src,
 			date :this.state.date,
 			dest :this.state.dest
@@ -80,7 +77,6 @@ export default class Train extends React.Component {
 				trainName:this.state.trainName,
 				numberOfCompartment: this.state.numberOfCompartment,
 				bookedSeats:this.state.bookedSeats,
-				remainingSeats:this.state.remainingSeats,
 				src :this.state.src,
 				date :this.state.date,
 				dest :this.state.dest
@@ -187,17 +183,6 @@ export default class Train extends React.Component {
 					    	placeholder="Enter Booked Seats" 
 					    	className={"bg-dark text-white"}/>
 				  </Form.Group>
-				  <Form.Group as={Col} controlId="formGridremainingSeats">
-				      	<Form.Label>Remaining Seats</Form.Label>
-				      <Form.Control required autoComplete="off"
-				      	type="text" name="remainingSeats"
-				      	value={remainingSeats}
-				    	onChange={this.trainChange}
-				      	placeholder="Enter Remaining Seats"
-				      	className={"bg-dark text-white"}/>
-				   </Form.Group>
-			  	</Form.Row>
-			  	<Form.Row>
 			  	   
 				  <Form.Group as={Col} controlId="formGriddate">
 				      	<Form.Label>Date & Time (dd.mm.yyyy hh:mm:ss)</Form.Label>

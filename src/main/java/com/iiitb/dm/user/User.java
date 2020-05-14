@@ -17,8 +17,6 @@ public class User {
 	
 	public User() {}
 	
-	
-	
 	public User(String id, String name, String mail, String password, String age, String sex, String mobile_no, String pswdLastChanged) {
 		super();
 		this.id = id;
@@ -30,8 +28,6 @@ public class User {
 		this.mobile_no = mobile_no;
 		this.pswdLastChanged = pswdLastChanged;
 	}
-
-
 
 	public String getMail() {
 		return mail;

@@ -5,3 +5,4 @@ node_modules/
 .project
 .settings/org.eclipse.jdt.core.prefs
 .idea*
+src/main/resources/application.properties
