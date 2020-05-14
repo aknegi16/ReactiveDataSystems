@@ -13,13 +13,13 @@ public class User {
 	private String age;
 	private String sex;
 	private String mobile_no;
-	
+	private String pswdLastChanged;
 	
 	public User() {}
 	
 	
 	
-	public User(String id, String name, String mail, String password, String age, String sex, String mobile_no) {
+	public User(String id, String name, String mail, String password, String age, String sex, String mobile_no, String pswdLastChanged) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,6 +28,7 @@ public class User {
 		this.age = age;
 		this.sex = sex;
 		this.mobile_no = mobile_no;
+		this.pswdLastChanged = pswdLastChanged;
 	}
 
 
@@ -85,6 +86,18 @@ public class User {
 
 	public void setMobile_no(String mobile_no) {
 		this.mobile_no = mobile_no;
+	}
+
+
+
+	public String getPswdLastChanged() {
+		return pswdLastChanged;
+	}
+
+
+
+	public void setPswdLastChanged(String pswdLastChanged) {
+		this.pswdLastChanged = pswdLastChanged;
 	}
 
 }

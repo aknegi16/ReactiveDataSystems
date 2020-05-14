@@ -25,7 +25,7 @@ export default class Register extends React.Component {
 	
 	onSubmit(event) {
 		event.preventDefault();
-		
+		let today = new Date().getTime();
 		const user = {
 			id: this.state.id,
 			age: this.state.age,
@@ -33,7 +33,8 @@ export default class Register extends React.Component {
 			mobile_no: this.state.mobile_no,
 			name:this.state.name,
 			password: this.state.password,
-			sex: this.state.sex
+			sex: this.state.sex,
+			pswdLastChanged: today
 		}
 		
 		axios.get("http://localhost:8001/rest/users/"+user.id)

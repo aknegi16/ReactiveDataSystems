@@ -29,7 +29,9 @@ export default class userChangePassword extends React.Component {
 					alert("Enter correct current password");
 				} else {
 					let user = response.data;
+					let today = new Date().getTime();
 					user.password = this.state.newPassword;
+					user.pswdLastChanged = today;
 					axios.put("http://localhost:8001/rest/users/"+userId, user)
 					.then(response => {
 						alert("Update success");
