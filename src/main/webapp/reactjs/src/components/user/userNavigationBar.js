@@ -26,7 +26,7 @@ export default class NavigationBar extends React.Component {
 			 <Nav className="container-fluid">
 			  <Link to={"userHome"} className="nav-link">Home</Link>
 			  <Link to={"bookingHistory"} className="nav-link">Ticket history</Link>
-		      <Link to={"bookTrain"} className="nav-link">Book a train</Link>
+		      <Link to={"bookTicket"} className="nav-link">Book a ticket</Link>
 		      <Link to={"userChangePassword"} className="nav-link">Change Password</Link>
 		      <Button className="ml-auto" size="sm" variant="secondary" onClick={this.logout}>Logout</Button>
 		    </Nav>

@@ -10,7 +10,7 @@ import NavigationBar from './userNavigationBar';
 import Footer from '../Footer';
 
 import bookingHistory from '../train/bookingHistory';
-import bookTrain from '../train/bookTrain';
+import bookTicket from '../train/bookTicket';
 import userWelcome from './userWelcome';
 import userChangePassword from './userChangePassword';
 
@@ -34,7 +34,7 @@ class userHome extends React.Component {
 		    				<Switch>
 		    					<Route path="/userHome" exact component={userWelcome}/> 
 		    					<Route path="/bookingHistory" exact component={bookingHistory}/>
-		    					<Route path="/bookTrain" exact component={bookTrain}/>
+		    					<Route path="/bookTicket" exact component={bookTicket}/>
 		    					<Route path="/userChangePassword" exact component={userChangePassword}/>
 		    				</Switch>
 		    			</Col>
