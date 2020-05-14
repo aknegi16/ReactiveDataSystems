@@ -119,7 +119,7 @@ export default class adminCreateRule extends React.Component {
 		event.preventDefault();
 		const action = {
 				action_type: this.state.action_type,
-				query: this.state.queries,
+				queries: this.state.queries,
 				method_path: this.state.method_path
 		}
 
@@ -166,7 +166,7 @@ export default class adminCreateRule extends React.Component {
 				operator: this.operatorSelect.value,
 				value: this.valueTextInput.value
 			};
-			const list = this.state.event.conditions.condition;
+			const list = this.state.condition || this.state.event.conditions.condition;
 			list.push(cond);
 			this.setState({condition: list});
 		}
@@ -177,7 +177,7 @@ export default class adminCreateRule extends React.Component {
 			const cond = {
 				query: this.queryTextInput.value
 			};
-			const list = this.state.action.queries;
+			const list = this.state.queries || this.state.action.queries;
 			list.push(cond);
 			this.setState({queries: list});
 		}
@@ -277,7 +277,6 @@ export default class adminCreateRule extends React.Component {
 	renderQueries = () => {
 		const list = this.state.queries || this.state.action.queries;
 		if (this.state.action.queries) {
-			debugger;
 			const queries1 = list.map( (con, i) => (
 				<span key={i}>
 					<Form.Row>
@@ -333,7 +332,6 @@ export default class adminCreateRule extends React.Component {
 		const event_type = this.state.event_type;
 		const conjunction = this.state.conjunction;
 		const action_type = this.state.action_type;
-		const query = this.state.query;
 		const method_path = this.state.method_path;
 		const rule_type = this.state.rule_type;
 		const rule_status = this.state.rule_status;

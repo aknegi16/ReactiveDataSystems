@@ -32,7 +32,7 @@ export default class Train extends React.Component {
 					id: response.data.id,
 					trainId: response.data.trainId,
 					trainName: response.data.trainName,
-					numberOfCompartment: response.data.numberOfCompartment,
+					numberOfCompartment: response.data.numberOfCompartment + "(will be changed based on rule)",
 					bookedSeats :response.data.bookedSeats,
 					remainingSeats:response.data.remainingSeats,
 					src :response.data.src,
@@ -58,7 +58,7 @@ export default class Train extends React.Component {
 			const train = {
 					trainId: this.state.trainId,
 					trainName:this.state.trainName,
-					numberOfCompartment: this.state.numberOfCompartment,
+					numberOfCompartment: 5,
 					bookedSeats: 0,
 					src :this.state.src,
 					dest :this.state.dest,
@@ -202,11 +202,11 @@ export default class Train extends React.Component {
 		
 				  <Form.Group as={Col} controlId="formGridNumberOfCompartment">
 				      	<Form.Label>Number of Compartment</Form.Label>
-				      <Form.Control required autoComplete="off"
+				      <Form.Control autoComplete="off" disabled
 				      	type="number" name="numberOfCompartment"
 				      	value={numberOfCompartment}
 				    	onChange={this.trainChange}
-				      	placeholder="Enter number of Compartments"
+				      	placeholder="5 (Will be changed later based on rule)"
 				      	className={"bg-dark text-white"}/>
 				   </Form.Group>
 				  <Form.Group as={Col} controlId="formGriddate">
