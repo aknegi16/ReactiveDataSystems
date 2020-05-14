@@ -21,6 +21,8 @@ export default class userChangePassword extends React.Component {
 		event.preventDefault();
 		if (this.state.newPassword != this.state.newPasswordRepeat) {
 			alert("Entered new passwords are not equal to each other");
+		} else if (this.state.oldPassword == this.state.newPassword) {
+			alert("Old and new passwords shouldnt be same");
 		} else {
 			let userId = localStorage.getItem('usr');
 			axios.get("http://localhost:8001/rest/users/"+userId)
