@@ -32,7 +32,7 @@ export default class Train extends React.Component {
 					id: response.data.id,
 					trainId: response.data.trainId,
 					trainName: response.data.trainName,
-					numberOfCompartment: response.data.numberOfCompartment + "(will be changed based on rule)",
+					numberOfCompartment: response.data.numberOfCompartment,
 					bookedSeats :response.data.bookedSeats,
 					remainingSeats:response.data.remainingSeats,
 					src :response.data.src,
@@ -70,6 +70,7 @@ export default class Train extends React.Component {
 				if (response.data != null) {
 					this.setState({"show":true, "method":"post"});
 					setTimeout(() => this.setState({"show":false}), 3000);
+					setTimeout(() => this.trainList(), 3000);
 				} else {
 					this.setState({"show":false});	
 				}
@@ -95,7 +96,7 @@ export default class Train extends React.Component {
 					trainId: this.state.trainId,
 					trainName:this.state.trainName,
 					numberOfCompartment: this.state.numberOfCompartment,
-					bookedSeats: 0,
+					bookedSeats: this.state.bookedSeats,
 					src :this.state.src,
 					dest :this.state.dest,
 					date : d.getFullYear()+"-"+month+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()

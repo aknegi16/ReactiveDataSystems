@@ -81,7 +81,6 @@ export default class bookingHistory extends React.Component {
 				      <th>Seats Booked</th>
 				      <th>PNR</th>
 				      <th>Date</th>
-				      <th>Status</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -99,7 +98,6 @@ export default class bookingHistory extends React.Component {
 						    	<td>{bookingDetails.seatsReserved}</td>
 						    	<td>{bookingDetails.pnr}</td>
 						    	<td>{bookingDetails.date}</td>
-						    	<td>{bookingDetails.status}</td>
 						    </tr> 
 					    	)
 				  }
