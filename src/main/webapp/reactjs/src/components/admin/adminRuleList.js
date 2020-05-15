@@ -88,7 +88,7 @@ export default class adminRuleList extends React.Component {
 						    	<td> {
 						    		 rule.event.conditions.condition.map((c,i) =>
 						    		 <span key={i}>
-						             {c.attribute+" "+c.operator+" "+c.value}<br/>
+						             {c.attribute+" "+c.operator+" "+c.value}<hr/>
 						             </span>
 						    	
 						    	)}</td>
@@ -97,7 +97,7 @@ export default class adminRuleList extends React.Component {
 						    			<p>{
 								    		 rule.action.queries.map((c,i) =>
 								    		 <span key={i}>
-								             {c.query}<br/>
+								             {"Query "+(i+1)+" : "+c.query}<hr/>
 								             </span>
 								    	
 								    	)}</p> 
