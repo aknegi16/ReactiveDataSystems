@@ -46,6 +46,7 @@ export default class adminRuleList extends React.Component {
 		axios.get("http://localhost:8001/rest/rules/execute")
 		.then(response => {
 			this.setState({"show":true});
+			alert("Rule execution success");
 			setTimeout(() => this.setState({"show":false}), 3000);
 			});
 	}

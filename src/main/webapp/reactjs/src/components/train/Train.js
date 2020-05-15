@@ -52,9 +52,7 @@ export default class Train extends React.Component {
 			alert("Source and destination cant be same");
 		} else {
 			const d = this.state.date;
-			const monthNames = ["January", "February", "March", "April", "May", "June",
-				  "July", "August", "September", "October", "November", "December"
-				];
+			const month = d.getMonth()+1;
 			const train = {
 					trainId: this.state.trainId,
 					trainName:this.state.trainName,
@@ -62,7 +60,7 @@ export default class Train extends React.Component {
 					bookedSeats: 0,
 					src :this.state.src,
 					dest :this.state.dest,
-					date : d.getFullYear()+"-"+monthNames[d.getMonth()]+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+					date : d.getFullYear()+"-"+month+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()
 				}
 			
 			axios.post("http://localhost:8001/rest/trains/", train)
@@ -87,9 +85,6 @@ export default class Train extends React.Component {
 			alert("Atleast keep 1 bogie");
 		} else {
 			const d = this.state.date;
-			const monthNames = ["January", "February", "March", "April", "May", "June",
-				  "July", "August", "September", "October", "November", "December"
-				];
 			const month = d.getMonth()+1;
 			const train = {
 					id: this.state.id,

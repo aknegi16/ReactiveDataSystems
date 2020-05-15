@@ -70,7 +70,7 @@ export default class TrainList extends React.Component {
 				  {
 					  this.state.trains.length === 0 ?
 					    <tr align="center">
-					    	<td colSpan="7">No trains available</td>
+					    	<td colSpan="8">No trains available</td>
 					    </tr> :
 					    	this.state.trains.map((train) =>
 					    	<tr align="center" key={train.trainId}>

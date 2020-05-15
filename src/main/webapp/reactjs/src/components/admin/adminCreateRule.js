@@ -303,7 +303,7 @@ export default class adminCreateRule extends React.Component {
 								ref={(ref) => this.queryTextInput = ref}
 								type="text" name="query"
 								onChange={this.ruleChange}
-								placeholder="Enter value"
+								placeholder="Enter query in SQL format"
 								className={"bg-dark text-white"}/>
 					    </Form.Group>
 						<span>
