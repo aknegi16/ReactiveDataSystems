@@ -77,6 +77,7 @@ public class Rule {
 		this.rule_type = rule_type;
 		this.rule_status = rule_status;
 	}
+	
 	 
 	 
 	 
